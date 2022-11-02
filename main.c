@@ -17,6 +17,26 @@
 //C item a collecter
 //E exit
 //P position depart
+
+void	generate_map(char *map)
+{
+	while(*map)
+	{
+		printf("%c", *map);
+		if(*map == '0')
+			generate_tile("./Terrain.xpm");
+		else if (*map == '1')
+			generate_tile("./Block.xpm");
+		else if (*map == 'E')
+			generate_tile("./Exit.xpm");
+		else if (*map == 'P')
+			generate_tile("./Joker.xpm");
+		else
+			break ;
+
+		map++;
+	}
+}
 int	main(void)
 {
 //	void	*mlx;
@@ -39,9 +59,8 @@ int	main(void)
 	while(str)
 	{
 		str = get_next_line(fd);
-		if (*str)
-			printf("%s", str);
-		str++;
+		if (str)
+			generate_map(str);
 	}
 //	mlx = mlx_init();
 //	mlx_win = mlx_new_window(mlx, 1920, 1080, "So_SSBU");
