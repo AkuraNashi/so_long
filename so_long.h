@@ -19,5 +19,17 @@
 #include <stdio.h>
 #include <unistd.h>
 
+typedef struct	s_coords
+{
+	int x;
+	int y;
+}	t_coords;
+
+typedef struct	s_entity
+{
+	t_coords coords;
+	void	*img;
+}	t_entity;
+
 #endif
 

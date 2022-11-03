@@ -13,7 +13,7 @@
 NAME 		= so_long
 LIBFT		= libft
 MINILIB		= minilib
-CFLAGS 		= -Wall -Wextra -Werror -Imlx
+CFLAGS 		= -Wall -Wextra -Werror -Imlx -I.
 CC			= cc
 SRC_PATH	= ./
 OPTIONS		= -Ilibft -Imlx -g3 -fsanitize=address
