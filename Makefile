@@ -16,7 +16,7 @@ MINILIB		= minilib
 CFLAGS 		= -Wall -Wextra -Werror -Imlx -I.
 CC			= cc
 SRC_PATH	= ./
-OPTIONS		= -Ilibft -Imlx -g3 -fsanitize=address
+OPTIONS		= -Ilibft -Lmlx -g3 -fsanitize=address
 SRC = main.c gnl/get_next_line.c gnl/get_next_line_utils.c
 SRCS = $(addprefix $(SRC_PATH),$(SRC))
 OBJS		= ${SRCS:.c=.o}
@@ -37,7 +37,7 @@ $(MLX):
 		${CC} ${CFLAGS} -c $< -o $@
 
 ${NAME}: ${OBJS} $(LIBFT) $(MLX)
-		$(CC)  -Ilibft -Lmlx -lmlx -L. -Llibft -I. -lft -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
+		$(CC)  ${OPTIONS} -lmlx -L. -Llibft -I. -lft -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
 
 clean:
 			${RM} ${OBJS} ${OBJS_B}

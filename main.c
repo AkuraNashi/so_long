@@ -12,11 +12,64 @@
 
 #include "so_long.h"
 
-//0 emplacement vide
-//1 mur
-//C item a collecter
-//E exit
-//P position depart
+t_coords *calculate_window_size(char **map)
+{
+	int	i;
+	int j;
+	t_coords *coords;
+
+	coords = malloc(sizeof(t_coords));
+	if (!coords)
+		return (NULL);
+	i = 0;
+	j = 0;
+	coords->x = 0;
+	coords->y = 0;
+	while (map[i])
+	{
+		while(map[i][j])
+		{
+			coords->x +=128;
+			j++;
+		}
+		coords->y += 128;
+		i++;
+	}
+	return (coords);
+}
+
+char	**fillmap(char	*file)
+{
+	char	*line;
+	char	**temp;
+	t_map	*map;
+	int		fd;
+	size_t	i;
+
+	fd = open(file, O_RDONLY);
+	line = get_next_line(fd);
+	i = ft_strlen(line) - 1;
+	temp = malloc(i * sizeof(char *));
+	if (!temp)
+		return (NULL);
+	map = malloc(sizeof(t_map));
+	if (!map)
+		return (NULL);
+	i = 0;
+	while (line)
+	{
+		temp[i] = ft_substr(line, 0, ft_strlen(line));
+		if (temp[i] == NULL)
+			return (NULL);
+		line = get_next_line(fd);
+		i++;
+	}
+	temp[i] = NULL;
+	map->map = temp;
+	close(fd);
+	return (map->map);
+}
+
 void	*generate_map(char *map, void *mlx, void *mlx_win, int y)
 {
 	int		i;
@@ -36,24 +89,24 @@ void	*generate_map(char *map, void *mlx, void *mlx_win, int y)
 			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
 			x += 128;
 		}
-		else if(map[i] == 'C')
+		else if (map[i] == 'C')
 		{
 			img = mlx_xpm_file_to_image(mlx, "./Coin.xpm",
 					&img_width, &img_height);
 			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
 			x += 128;
 		}
-		else if(map[i] == 'E')
+		else if (map[i] == 'E')
 		{
 			img = mlx_xpm_file_to_image(mlx, "./Exit.xpm",
-										&img_width, &img_height);
+					&img_width, &img_height);
 			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
 			x += 128;
 		}
-		else if(map[i] == 'P')
+		else if (map[i] == 'P')
 		{
 			img = mlx_xpm_file_to_image(mlx, "./Player.xpm",
-										&img_width, &img_height);
+					&img_width, &img_height);
 			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
 			x += 128;
 		}
@@ -64,27 +117,51 @@ void	*generate_map(char *map, void *mlx, void *mlx_win, int y)
 	return (img);
 }
 
+t_map	*new_map(int x, int y)
+{
+	t_map	*map;
+
+	map = malloc(sizeof(*map));
+	if (!map)
+		return (NULL);
+	map->coords_max.x = x;
+	map->coords_max.y = y;
+	map->map = fillmap("map1.txt");
+	return (map);
+}
+
 int	main(void)
 {
-	void	*mlx;
-	void	*img;
-	void	*mlx_win;
-	char	*str;
-	int		fd;
-	int		i;
+	t_map	*map;
+	int i;
 
-	fd = open("map1.txt", O_RDONLY);
-	str = "";
-	mlx = mlx_init();
 	i = 0;
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "So_SSBU");
-	//Permet de generer toutes les tiles
-	while (str)
-	{
-		str = get_next_line(fd);
-		if (str)
-			img = generate_map(str, mlx, mlx_win, i);
-		i += 128;
-	}
-	mlx_loop(mlx);
+	map = new_map(0,0);
+	calculate_window_size(map->map);
+//	calculate_window_size(c);
+//	t_map	*map;
+//
+//	map->map = fillmap("map1.txt");
+//	printf("%s", map->map);
+//	t_vars *vars;
+//	void	*mlx;
+//	void	*img;
+//	void	*mlx_win;
+//	char	*str;
+//	int		fd;
+//	int		i;
+//
+//	fd = open("map1.txt", O_RDONLY);
+//	str = "";
+//	mlx = mlx_init();
+//	i = 0;
+//	mlx_win = mlx_new_window(mlx, 1920, 1080, "So_SSBU");
+//	while (str)
+//	{
+//		str = get_next_line(fd);
+//		if (str)
+//			img = generate_map(str, mlx, mlx_win, i);
+//		i += 128;
+//	}
+//	mlx_loop(mlx);
 }
