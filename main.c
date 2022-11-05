@@ -12,15 +12,13 @@
 
 #include "so_long.h"
 
-t_coords *calculate_window_size(char **map)
+void	calculate_window_size(char **map)
 {
 	int	i;
 	int j;
 	t_coords *coords;
 
-	coords = malloc(sizeof(t_coords));
-	if (!coords)
-		return (NULL);
+	coords = malloc(sizeof(*coords));
 	i = 0;
 	j = 0;
 	coords->x = 0;
@@ -35,7 +33,6 @@ t_coords *calculate_window_size(char **map)
 		coords->y += 128;
 		i++;
 	}
-	return (coords);
 }
 
 char	**fillmap(char	*file)
@@ -120,42 +117,32 @@ void	*generate_map(char *map, void *mlx, void *mlx_win, int y)
 t_map	*new_map(int x, int y)
 {
 	t_map	*map;
-
 	map = malloc(sizeof(*map));
 	if (!map)
 		return (NULL);
-	map->coords_max.x = x;
-	map->coords_max.y = y;
 	map->map = fillmap("map1.txt");
+	map->coords_max->x = x; 
+	map->coords_max->y = y;
 	return (map);
 }
 
 int	main(void)
 {
 	t_map	*map;
-	int i;
-
-	i = 0;
-	map = new_map(0,0);
-	calculate_window_size(map->map);
-//	calculate_window_size(c);
-//	t_map	*map;
-//
-//	map->map = fillmap("map1.txt");
-//	printf("%s", map->map);
-//	t_vars *vars;
 //	void	*mlx;
 //	void	*img;
 //	void	*mlx_win;
 //	char	*str;
 //	int		fd;
-//	int		i;
-//
+//	int i;
+
+//	i = 0;
+	map = new_map(1, 1);
+//	calculate_window_size(map->map);
 //	fd = open("map1.txt", O_RDONLY);
 //	str = "";
 //	mlx = mlx_init();
-//	i = 0;
-//	mlx_win = mlx_new_window(mlx, 1920, 1080, "So_SSBU");
+//	mlx_win = mlx_new_window(mlx, map->coords_max.x, map->coords_max.y, "So_SSBU");
 //	while (str)
 //	{
 //		str = get_next_line(fd);

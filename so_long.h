@@ -27,7 +27,7 @@ typedef struct s_coords
 
 typedef struct s_map
 {
-	t_coords	coords_max;
+	t_coords	*coords_max;
 	char		**map;
 }	t_map;
 
