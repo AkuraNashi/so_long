@@ -12,11 +12,11 @@
 
 #include "so_long.h"
 
-void	calculate_window_size(char **map)
+t_coords	*calculate_window_size(char **map)
 {
-	int	i;
-	int j;
-	t_coords *coords;
+	int			i;
+	int			j;
+	t_coords	*coords;
 
 	coords = malloc(sizeof(*coords));
 	i = 0;
@@ -25,14 +25,15 @@ void	calculate_window_size(char **map)
 	coords->y = 0;
 	while (map[i])
 	{
-		while(map[i][j])
+		while (map[i][j])
 		{
-			coords->x +=128;
+			coords->x += 128;
 			j++;
 		}
 		coords->y += 128;
 		i++;
 	}
+	return (coords);
 }
 
 char	**fillmap(char	*file)
@@ -67,7 +68,7 @@ char	**fillmap(char	*file)
 	return (map->map);
 }
 
-void	*generate_map(char *map, void *mlx, void *mlx_win, int y)
+void	generate_map(char *map, void *mlx, void *mlx_win, int y)
 {
 	int		i;
 	int		x;
@@ -111,17 +112,18 @@ void	*generate_map(char *map, void *mlx, void *mlx_win, int y)
 			x += 128;
 		i++;
 	}
-	return (img);
 }
 
 t_map	*new_map(int x, int y)
 {
 	t_map	*map;
+
 	map = malloc(sizeof(*map));
-	if (!map)
+	map->coords_max = malloc(sizeof(*(map->coords_max)));
+	if (!map || !map->coords_max)
 		return (NULL);
 	map->map = fillmap("map1.txt");
-	map->coords_max->x = x; 
+	map->coords_max->x = x;
 	map->coords_max->y = y;
 	return (map);
 }
@@ -129,26 +131,23 @@ t_map	*new_map(int x, int y)
 int	main(void)
 {
 	t_map	*map;
-//	void	*mlx;
-//	void	*img;
-//	void	*mlx_win;
-//	char	*str;
-//	int		fd;
-//	int i;
+	void	*mlx;
+	void	*mlx_win;
+	int		i;
+	int		j;
 
-//	i = 0;
-	map = new_map(1, 1);
-//	calculate_window_size(map->map);
-//	fd = open("map1.txt", O_RDONLY);
-//	str = "";
-//	mlx = mlx_init();
-//	mlx_win = mlx_new_window(mlx, map->coords_max.x, map->coords_max.y, "So_SSBU");
-//	while (str)
-//	{
-//		str = get_next_line(fd);
-//		if (str)
-//			img = generate_map(str, mlx, mlx_win, i);
-//		i += 128;
-//	}
-//	mlx_loop(mlx);
+	i = 0;
+	j = 0;
+	map = new_map(0, 0);
+	map->coords_max = calculate_window_size(map->map);
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, 1920, 1080, "So_SSBU");
+	while (map->map[j])
+	{
+		if (map->map)
+			generate_map(map->map[j], mlx, mlx_win, i);
+		i += 128;
+		j++;
+	}
+	mlx_loop(mlx);
 }

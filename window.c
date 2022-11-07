@@ -24,10 +24,10 @@ t_map	*calculate_window(t_map *map)
 	{
 		while (map->map[j])
 		{
-			map->coords_max.y += 128;
+			map->coords_max->y += 128;
 			j++;
 		}
-		map->coords_max.x += 128;
+		map->coords_max->x += 128;
 		i++;
 	}
 	return (map);
