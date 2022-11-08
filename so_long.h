@@ -45,7 +45,9 @@ typedef struct s_vars
 	t_map		*map;
 }	t_vars;
 
-t_vars	*new_vars(int c);
-t_map	*calculate_window(t_map *map);
-
+t_map		*new_map(void);
+char		**fillmap(char	*file);
+t_coords	*calculate_window_size(char **map);
+void		generate_map(char *map, void *mlx, void *mlx_win, int y);
+t_coords 	*find_player(char **map);
 #endif

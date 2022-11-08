@@ -12,29 +12,8 @@
 
 #include "so_long.h"
 
-t_coords	*calculate_window_size(char **map)
-{
-	int			i;
-	int			j;
-	t_coords	*coords;
 
-	coords = malloc(sizeof(*coords));
-	i = 0;
-	j = 0;
-	coords->x = 0;
-	coords->y = 0;
-	while (map[i])
-	{
-		while (map[i][j])
-		{
-			coords->x += 128;
-			j++;
-		}
-		coords->y += 128;
-		i++;
-	}
-	return (coords);
-}
+//Remplit le **map de la t_struct via le fichier .txt
 
 char	**fillmap(char	*file)
 {
@@ -68,53 +47,9 @@ char	**fillmap(char	*file)
 	return (map->map);
 }
 
-void	generate_map(char *map, void *mlx, void *mlx_win, int y)
-{
-	int		i;
-	int		x;
-	void	*img;
-	int		img_width;
-	int		img_height;
+//Cree une map
 
-	i = 0;
-	x = 0;
-	while (map[i])
-	{
-		if (map[i] == '1')
-		{
-			img = mlx_xpm_file_to_image(mlx, "./Block.xpm",
-					&img_width, &img_height);
-			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
-			x += 128;
-		}
-		else if (map[i] == 'C')
-		{
-			img = mlx_xpm_file_to_image(mlx, "./Coin.xpm",
-					&img_width, &img_height);
-			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
-			x += 128;
-		}
-		else if (map[i] == 'E')
-		{
-			img = mlx_xpm_file_to_image(mlx, "./Exit.xpm",
-					&img_width, &img_height);
-			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
-			x += 128;
-		}
-		else if (map[i] == 'P')
-		{
-			img = mlx_xpm_file_to_image(mlx, "./Player.xpm",
-					&img_width, &img_height);
-			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
-			x += 128;
-		}
-		else
-			x += 128;
-		i++;
-	}
-}
-
-t_map	*new_map(int x, int y)
+t_map	*new_map(void)
 {
 	t_map	*map;
 
@@ -123,25 +58,29 @@ t_map	*new_map(int x, int y)
 	if (!map || !map->coords_max)
 		return (NULL);
 	map->map = fillmap("map1.txt");
-	map->coords_max->x = x;
-	map->coords_max->y = y;
+	map->coords_max->x = 0;
+	map->coords_max->y = 0;
 	return (map);
 }
 
 int	main(void)
 {
 	t_map	*map;
+	t_entity *player;
+	t_coords	*coords;
 	void	*mlx;
 	void	*mlx_win;
 	int		i;
 	int		j;
 
+	map = new_map();
+	map->coords_max = calculate_window_size(map->map);
+	coords = find_player(map->map);
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, map->coords_max->x,
+			map->coords_max->y, "So_SSBU");
 	i = 0;
 	j = 0;
-	map = new_map(0, 0);
-	map->coords_max = calculate_window_size(map->map);
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "So_SSBU");
 	while (map->map[j])
 	{
 		if (map->map)

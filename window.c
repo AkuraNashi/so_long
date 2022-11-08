@@ -12,31 +12,83 @@
 
 #include "so_long.h"
 
-t_map	*calculate_window(t_map *map)
+//Permet  de calculer la taille
+// de la fenetre en fonction de la map
+
+t_coords	*calculate_window_size(char **map)
 {
 	int			i;
 	int			j;
+	t_coords	*coords;
 
+	coords = malloc(sizeof(*coords));
 	i = 0;
 	j = 0;
-	map = malloc(sizeof(*map));
-	while (map->map[i])
+	coords->x = 0;
+	coords->y = 0;
+	while (map[i])
 	{
-		while (map->map[j])
+		while (map[i][j])
 		{
-			map->coords_max->y += 128;
+			if (map[i][j] != '\n')
+				coords->x += 128;
 			j++;
 		}
-		map->coords_max->x += 128;
+		coords->y += 128;
 		i++;
 	}
-	return (map);
+	return (coords);
 }
 
-t_vars	*new_vars(int c)
-{
-	t_vars	*vars;
+//Permet d'afficher graphiquement la map
 
-	vars = malloc(sizeof(*vars));
-	return (vars);
+void	generate_map(char *map, void *mlx, void *mlx_win, int y)
+{
+	int		i;
+	int		x;
+	void	*img;
+	int		img_width;
+	int		img_height;
+
+	i = 0;
+	x = 0;
+	while (map[i])
+	{
+		if (map[i] == '1')
+		{
+			img = mlx_xpm_file_to_image(mlx, "./Block.xpm",
+										&img_width, &img_height);
+			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
+			x += 128;
+		}
+		else if (map[i] == 'C')
+		{
+			img = mlx_xpm_file_to_image(mlx, "./Coin.xpm",
+										&img_width, &img_height);
+			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
+			x += 128;
+		}
+		else if (map[i] == 'E')
+		{
+			img = mlx_xpm_file_to_image(mlx, "./Exit.xpm",
+										&img_width, &img_height);
+			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
+			x += 128;
+		}
+		else if (map[i] == 'P')
+		{
+			img = mlx_xpm_file_to_image(mlx, "./Player.xpm",
+										&img_width, &img_height);
+			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
+			x += 128;
+		}
+		else
+		{
+			img = mlx_xpm_file_to_image(mlx, "./Terrain.xpm",
+										&img_width, &img_height);
+			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
+			x += 128;
+		}
+		i++;
+	}
 }

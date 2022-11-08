@@ -17,7 +17,11 @@ CFLAGS 		= -Wall -Wextra -Werror -Imlx -I.
 CC			= cc
 SRC_PATH	= ./
 OPTIONS		= -Ilibft -Lmlx -g3 -fsanitize=address
-SRC = main.c gnl/get_next_line.c gnl/get_next_line_utils.c
+SRC 		= 	main.c						\
+				player.c					\
+				window.c					\
+				gnl/get_next_line.c			\
+				gnl/get_next_line_utils.c
 SRCS = $(addprefix $(SRC_PATH),$(SRC))
 OBJS		= ${SRCS:.c=.o}
 
