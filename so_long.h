@@ -33,21 +33,22 @@ typedef struct s_map
 
 typedef struct s_entity
 {
-	t_coords	coords;
+	t_coords	*coords;
 	void		*img;
 }	t_entity;
 
-typedef struct s_vars
+typedef struct s_mlx
 {
 	void		*mlx;
 	void		*mlx_win;
-	t_entity	*entity;
-	t_map		*map;
-}	t_vars;
+	int			img_width;
+	int			img_height;
+}	t_mlx;
 
 t_map		*new_map(void);
 char		**fillmap(char	*file);
 t_coords	*calculate_window_size(char **map);
-void		generate_map(char *map, void *mlx, void *mlx_win, int y);
-t_coords 	*find_player(char **map);
+void	generate_map(char *map, t_mlx *mlx, int y);
+t_coords	*find_player(char **map);
+t_mlx		*new_mlx(t_map *map);
 #endif

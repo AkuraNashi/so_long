@@ -12,7 +12,18 @@
 
 #include "so_long.h"
 
-t_coords *find_player(char **map)
+//Ajouter nom du joueur en parametres ?
+//t_entity	*new_player(char **map, char *image)
+//{
+//	t_entity	*player;
+//
+//	player = malloc(sizeof(*player));
+//	player->coords = find_player(map);
+//	player->img = image;
+//	return (player);
+//}
+
+t_coords	*find_player(char **map)
 {
 	t_coords	*coords;
 	int			i;
