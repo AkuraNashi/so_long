@@ -13,15 +13,14 @@
 #include "so_long.h"
 
 //Ajouter nom du joueur en parametres ?
-//t_entity	*new_player(char **map, char *image)
-//{
-//	t_entity	*player;
-//
-//	player = malloc(sizeof(*player));
-//	player->coords = find_player(map);
-//	player->img = image;
-//	return (player);
-//}
+t_entity	*new_player(char **map)
+{
+	t_entity	*player;
+
+	player = malloc(sizeof(*player));
+	player->coords = find_player(map);
+	return (player);
+}
 
 t_coords	*find_player(char **map)
 {
@@ -50,4 +49,24 @@ t_coords	*find_player(char **map)
 		i++;
 	}
 	return (coords);
+}
+
+void	movement(t_entity *player, t_map *map, t_mlx *mlx)
+{
+	t_coords	*cp;
+	void	*img;
+
+	cp = malloc(sizeof(*cp));
+//	mlx->map = map;
+//	mlx->player = player;
+//	cp = player->coords;
+	if(map->map[cp->x+1][cp->y] != '1')
+	{
+		printf("test");
+		img = NULL;
+//		img = mlx_xpm_file_to_image(mlx->mlx, "./Player.xpm",
+//									&mlx->img_width, &mlx->img_height);
+//		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, 128 * cp->x, cp->y);
+	}
+	free(cp);
 }

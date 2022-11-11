@@ -51,4 +51,4 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY: re fclean clean all $(LIBFT) $(NAME) $(MINILIB)
+.PHONY: re ignore fclean clean all $(LIBFT) $(NAME) $(MINILIB)

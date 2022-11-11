@@ -17,12 +17,12 @@
 
 t_mlx	*new_mlx(t_map *map)
 {
-	t_mlx *window;
+	t_mlx	*window;
 
-	printf("%d", map->coords_max->x);
 	window = malloc(sizeof(*window));
 	window->mlx = mlx_init();
-	window->mlx_win = mlx_new_window(window->mlx,map->coords_max->x, map->coords_max->y, "SO_SSBU");
+	window->mlx_win = mlx_new_window(window->mlx, map->coords_max->x,
+			map->coords_max->y, "SO_SSBU");
 	window->img_height = 0;
 	window->img_width = 0;
 	return (window);
@@ -30,9 +30,9 @@ t_mlx	*new_mlx(t_map *map)
 
 t_coords	*calculate_window_size(char **map)
 {
+	t_coords	*coords;
 	int			i;
 	int			j;
-	t_coords	*coords;
 
 	coords = malloc(sizeof(*coords));
 	i = 0;
@@ -68,7 +68,7 @@ void	generate_map(char *map, t_mlx *mlx, int y)
 		if (map[i] == '1')
 		{
 			img = mlx_xpm_file_to_image(mlx->mlx, "./Block.xpm",
-										&mlx->img_width, &mlx->img_height);
+					&mlx->img_width, &mlx->img_height);
 			mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, x, y);
 			x += 128;
 		}

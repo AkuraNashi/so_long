@@ -57,23 +57,45 @@ t_map	*new_map(void)
 	if (!map || !map->coords_max)
 		return (NULL);
 	map->map = fillmap("map1.txt");
-	map->coords_max->x = 0;
-	map->coords_max->y = 0;
+	map->coords_max = calculate_window_size(map->map);
 	return (map);
 }
 
+int key_hook(int keycode, t_mlx *mlx)
+{
+	if (keycode == 53)
+	{
+		free(mlx->mlx_win);
+		free(mlx->mlx);
+		free(mlx);
+		exit(0);
+	}
+	printf("%d\n", keycode);
+	if (keycode == 2)
+	{
+		printf("lkgjhgnwej\n\n\n");
+		movement(mlx->player, mlx->map, mlx);
+	}
+	return (0);
+}
+
+//W : 13
+//A : 0
+//S : 1
+//D : 2
+//ESC : 53
 int	main(void)
 {
 	t_map		*map;
-	t_coords 	*coords;
-	t_mlx	*mlx;
+	t_entity	*player;
+	t_mlx		*mlx;
 	int			i;
 	int			j;
 
 	map = new_map();
-	map->coords_max = calculate_window_size(map->map);
-	coords = find_player(map->map);
+	player = new_player(map->map);
 	mlx = new_mlx(map);
+	mlx->map = map;
 	i = 0;
 	j = 0;
 	while (map->map[j])
@@ -83,5 +105,6 @@ int	main(void)
 		i += 128;
 		j++;
 	}
+	mlx_key_hook(mlx->mlx_win, key_hook, mlx);
 	mlx_loop(mlx->mlx);
 }
