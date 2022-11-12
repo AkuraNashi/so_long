@@ -48,11 +48,11 @@ typedef struct s_mlx
 }	t_mlx;
 
 t_map		*new_map(void);
-char		**fillmap(char	*file);
 t_mlx		*new_mlx(t_map *map);
 t_coords	*calculate_window_size(char **map);
-void		generate_map(char *map, t_mlx *mlx, int y);
 t_entity	*new_player(char **map);
 t_coords	*find_player(char **map);
-void	movement(t_entity *player, t_map *map, t_mlx *mlx);
+char		**fillmap(char	*file);
+void		generate_map(char *map, t_mlx *mlx, int y);
+void		movement(t_mlx *mlx);
 #endif

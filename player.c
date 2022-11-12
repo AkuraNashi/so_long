@@ -51,22 +51,21 @@ t_coords	*find_player(char **map)
 	return (coords);
 }
 
-void	movement(t_entity *player, t_map *map, t_mlx *mlx)
+void	movement(t_mlx *mlx)
 {
-	t_coords	*cp;
-	void	*img;
+	t_coords	*loc;
+	t_map		*map;
+	void		*img;
 
-	cp = malloc(sizeof(*cp));
-//	mlx->map = map;
-//	mlx->player = player;
-//	cp = player->coords;
-	if(map->map[cp->x+1][cp->y] != '1')
+	loc = mlx->player->coords;
+	map = mlx->map;
+	if (map->map[loc->y][loc->x + 1] != '1')
 	{
-		printf("test");
-		img = NULL;
-//		img = mlx_xpm_file_to_image(mlx->mlx, "./Player.xpm",
-//									&mlx->img_width, &mlx->img_height);
-//		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, 128 * cp->x, cp->y);
+		img = mlx_xpm_file_to_image(mlx->mlx, "./Player.xpm",
+									&mlx->img_width, &mlx->img_height);
+		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (loc->x * 128) + 128, loc->y * 128);
 	}
-	free(cp);
+	img = NULL;
+	mlx->player->coords->x += 1;
+	printf("apres : %d\n\n", mlx->player->coords->x);
 }

@@ -70,11 +70,9 @@ int key_hook(int keycode, t_mlx *mlx)
 		free(mlx);
 		exit(0);
 	}
-	printf("%d\n", keycode);
 	if (keycode == 2)
 	{
-		printf("lkgjhgnwej\n\n\n");
-		movement(mlx->player, mlx->map, mlx);
+		movement(mlx);
 	}
 	return (0);
 }
@@ -87,14 +85,13 @@ int key_hook(int keycode, t_mlx *mlx)
 int	main(void)
 {
 	t_map		*map;
-	t_entity	*player;
 	t_mlx		*mlx;
 	int			i;
 	int			j;
 
 	map = new_map();
-	player = new_player(map->map);
 	mlx = new_mlx(map);
+	mlx->player = new_player(map->map);
 	mlx->map = map;
 	i = 0;
 	j = 0;

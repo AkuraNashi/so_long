@@ -25,6 +25,8 @@ t_mlx	*new_mlx(t_map *map)
 			map->coords_max->y, "SO_SSBU");
 	window->img_height = 0;
 	window->img_width = 0;
+	window->map = new_map();
+	window->player = new_player(map->map);
 	return (window);
 }
 
