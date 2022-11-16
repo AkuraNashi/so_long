@@ -1,75 +1,61 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.c                                           :+:      :+:    :+:   */
+/*   path_finding.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcamilo- <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:35:13 by lcamilo-          #+#    #+#             */
-/*   Updated: 2022/11/07 16:35:15 by lcamilo-         ###   ########.fr       */
+/*   Created: 2022/11/16 15:48:00 by lcamilo-          #+#    #+#             */
+/*   Updated: 2022/11/16 15:48:01 by lcamilo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-//Ajouter nom du joueur en parametres ?
-t_entity	*new_player(char **map)
+//i = y
+//j = x
+void	recursive_path(t_mlx *mlx, t_coords *c, int i)
 {
-	t_entity	*player;
+	char	**map;
 
-	player = malloc(sizeof(*player));
-	player->coords = find_player(map);
-	player->coins = 0;
-	return (player);
+	map = mlx->map->map;
+	c = mlx->player->coords;
+	//Haut
+	if (map[c->y][c->x] && map[c->y - 1][c->x] != '1')
+	{
+		c->y -= 1;
+		i += 1;
+		recursive_path(mlx, c, i);
+	}
 }
 
-t_coords	*find_player(char **map)
+void	check_coins(t_mlx *mlx)
 {
-	t_coords	*coords;
+	char		**map;
 	int			i;
 	int			j;
+	t_coords	*coords;
 
 	coords = malloc(sizeof(*coords));
 	if (!coords)
-		return (NULL);
-	i = 0;
+		return ;
 	coords->x = 0;
 	coords->y = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == 'P')
-			{
-				coords->x = j;
-				coords->y = i;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (coords);
-}
-
-int count_coins(char **map)
-{
-	int	i;
-	int j;
-	int	coins;
-
-	coins = 0;
+	map = mlx->map->map;
 	i = 0;
+	j = 0;
 	while (map[i])
 	{
 		j = 0;
 		while (map[i][j])
 		{
 			if (map[i][j] == 'C')
-				coins++;
+			{
+				coords->x = j;
+				coords->y = i;
+				recursive_path(mlx, coords, 0);
+			}
 			j++;
 		}
 		i++;
 	}
-	return (coins);
 }

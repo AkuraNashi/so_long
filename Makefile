@@ -19,7 +19,9 @@ SRC_PATH	= ./
 OPTIONS		= -Ilibft -Lmlx -g3 -fsanitize=address
 SRC 		= 	main.c						\
 				player.c					\
+				movement.c					\
 				window.c					\
+				path_finding.c				\
 				gnl/get_next_line.c			\
 				gnl/get_next_line_utils.c
 SRCS = $(addprefix $(SRC_PATH),$(SRC))

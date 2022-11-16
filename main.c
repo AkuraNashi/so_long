@@ -61,27 +61,25 @@ t_map	*new_map(void)
 	return (map);
 }
 
-int key_hook(int keycode, t_mlx *mlx)
+int	key_hook(int keycode, t_mlx *mlx)
 {
 	if (keycode == 53)
 	{
-		free(mlx->mlx_win);
-		free(mlx->mlx);
-		free(mlx);
-		exit(0);
+		close_window(mlx);
 	}
 	if (keycode == 2)
-	{
-		movement(mlx);
-	}
+		movement_right(mlx);
+	else if (keycode == 0)
+		movement_left(mlx);
+	else if (keycode == 13)
+		movement_up(mlx);
+	else if (keycode == 1)
+		movement_down(mlx);
+	printf("move : %d\n", mlx->move);
+	printf("Coins amasse : %d\n",mlx->player->coins);
 	return (0);
 }
 
-//W : 13
-//A : 0
-//S : 1
-//D : 2
-//ESC : 53
 int	main(void)
 {
 	t_map		*map;
@@ -102,6 +100,7 @@ int	main(void)
 		i += 128;
 		j++;
 	}
+	//check_coins(mlx);
 	mlx_key_hook(mlx->mlx_win, key_hook, mlx);
 	mlx_loop(mlx->mlx);
 }

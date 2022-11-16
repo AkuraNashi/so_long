@@ -27,8 +27,12 @@ t_mlx	*new_mlx(t_map *map)
 	window->img_width = 0;
 	window->map = new_map();
 	window->player = new_player(map->map);
+	window->move = 0;
+	window->coins = count_coins(map->map);
 	return (window);
 }
+
+//Calcule la taille de la fenetre
 
 t_coords	*calculate_window_size(char **map)
 {
@@ -104,4 +108,12 @@ void	generate_map(char *map, t_mlx *mlx, int y)
 		}
 		i++;
 	}
+}
+
+void	close_window(t_mlx *mlx)
+{
+	free(mlx->mlx_win);
+	free(mlx->mlx);
+	free(mlx);
+	exit(0);
 }

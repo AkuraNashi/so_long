@@ -35,6 +35,7 @@ typedef struct s_entity
 {
 	t_coords	*coords;
 	void		*img;
+	int			coins;
 }	t_entity;
 
 typedef struct s_mlx
@@ -43,16 +44,30 @@ typedef struct s_mlx
 	void		*mlx_win;
 	int			img_width;
 	int			img_height;
+	int			move;
+	int			coins;
 	t_map		*map;
-	t_entity 	*player;
+	t_entity	*player;
 }	t_mlx;
 
-t_map		*new_map(void);
+//Window.c
 t_mlx		*new_mlx(t_map *map);
 t_coords	*calculate_window_size(char **map);
+void		generate_map(char *map, t_mlx *mlx, int y);
+void		close_window(t_mlx *mlx);
+//Player.c
 t_entity	*new_player(char **map);
 t_coords	*find_player(char **map);
+int			count_coins(char **map);
+//Map.c
+t_map		*new_map(void);
 char		**fillmap(char	*file);
-void		generate_map(char *map, t_mlx *mlx, int y);
-void		movement(t_mlx *mlx);
+//Movement.c
+void		movement_right(t_mlx *mlx);
+void		movement_left(t_mlx *mlx);
+void		movement_up(t_mlx *mlx);
+void		movement_down(t_mlx *mlx);
+//Path_finding.c
+void		check_coins(t_mlx *mlx);
+void		recursive_path(t_mlx *mlx, t_coords *coins, int i);
 #endif
