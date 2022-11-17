@@ -48,6 +48,7 @@ typedef struct s_mlx
 	int			coins;
 	t_map		*map;
 	t_entity	*player;
+	t_coords 	*cp;
 }	t_mlx;
 
 //Window.c
@@ -69,5 +70,6 @@ void		movement_up(t_mlx *mlx);
 void		movement_down(t_mlx *mlx);
 //Path_finding.c
 void		check_coins(t_mlx *mlx);
-void		recursive_path(t_mlx *mlx, t_coords *coins, int i);
+void		recursive_path(t_mlx *mlx);
+int			check_adjacent(t_mlx *mlx);
 #endif

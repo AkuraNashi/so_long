@@ -13,19 +13,57 @@
 #include "so_long.h"
 //i = y
 //j = x
-void	recursive_path(t_mlx *mlx, t_coords *c, int i)
+int	check_adjacent(t_mlx *mlx)
 {
+	void	*img;
+	t_coords *c;
 	char	**map;
 
 	map = mlx->map->map;
-	c = mlx->player->coords;
+	c = mlx->cp;
 	//Haut
-	if (map[c->y][c->x] && map[c->y - 1][c->x] != '1')
+	if (map[c->y - 1][c->x] != '1')
 	{
-		c->y -= 1;
-		i += 1;
-		recursive_path(mlx, c, i);
+		img = mlx_xpm_file_to_image(mlx->mlx, "./Blue.xpm",
+									&mlx->img_width, &mlx->img_height);
+		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (128 * c->x), (128 * c->y) - 128);
+		sleep(1);
 	}
+	//Droite
+	if (map[c->y][c->x + 1] != '1')
+	{
+		img = mlx_xpm_file_to_image(mlx->mlx, "./Blue.xpm",
+									&mlx->img_width, &mlx->img_height);
+		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (128 * c->x) + 128, (128 * c->y));
+		sleep(1);
+	}
+	//Bas
+	if (map[c->y + 1][c->x] != '1')
+	{
+		img = mlx_xpm_file_to_image(mlx->mlx, "./Blue.xpm",
+									&mlx->img_width, &mlx->img_height);
+		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (128 * c->x), (128 * c->y) + 128);
+		sleep(1);
+	}
+	//Gauche
+	if (map[c->y][c->x - 1] != '1')
+	{
+		img = mlx_xpm_file_to_image(mlx->mlx, "./Blue.xpm",
+									&mlx->img_width, &mlx->img_height);
+		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (128 * c->x) - 128, (128 * c->y));
+		sleep(1);
+	}
+	return (0);
+}
+
+void	recursive_path(t_mlx *mlx)
+{
+	char		**map;
+
+	map = mlx->map->map;
+	check_adjacent(mlx);
+	mlx_loop_hook(mlx->mlx, check_adjacent, &mlx);
+
 }
 
 void	check_coins(t_mlx *mlx)
@@ -33,13 +71,7 @@ void	check_coins(t_mlx *mlx)
 	char		**map;
 	int			i;
 	int			j;
-	t_coords	*coords;
 
-	coords = malloc(sizeof(*coords));
-	if (!coords)
-		return ;
-	coords->x = 0;
-	coords->y = 0;
 	map = mlx->map->map;
 	i = 0;
 	j = 0;
@@ -50,9 +82,9 @@ void	check_coins(t_mlx *mlx)
 		{
 			if (map[i][j] == 'C')
 			{
-				coords->x = j;
-				coords->y = i;
-				recursive_path(mlx, coords, 0);
+				mlx->cp->x = j;
+				mlx->cp->y = i;
+				recursive_path(mlx);
 			}
 			j++;
 		}

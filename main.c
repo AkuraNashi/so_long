@@ -75,8 +75,7 @@ int	key_hook(int keycode, t_mlx *mlx)
 		movement_up(mlx);
 	else if (keycode == 1)
 		movement_down(mlx);
-	printf("move : %d\n", mlx->move);
-	printf("Coins amasse : %d\n",mlx->player->coins);
+	//printf("move : %d\n", mlx->move);
 	return (0);
 }
 
@@ -100,7 +99,7 @@ int	main(void)
 		i += 128;
 		j++;
 	}
-	//check_coins(mlx);
+	check_coins(mlx);
 	mlx_key_hook(mlx->mlx_win, key_hook, mlx);
 	mlx_loop(mlx->mlx);
 }

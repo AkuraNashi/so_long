@@ -18,13 +18,18 @@
 t_mlx	*new_mlx(t_map *map)
 {
 	t_mlx	*window;
+	t_coords *temp;
 
+	temp = malloc(sizeof(*temp));
 	window = malloc(sizeof(*window));
 	window->mlx = mlx_init();
 	window->mlx_win = mlx_new_window(window->mlx, map->coords_max->x,
 			map->coords_max->y, "SO_SSBU");
 	window->img_height = 0;
 	window->img_width = 0;
+	temp->x = 0;
+	temp->y = 0;
+	window->cp = temp;
 	window->map = new_map();
 	window->player = new_player(map->map);
 	window->move = 0;
