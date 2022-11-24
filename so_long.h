@@ -59,7 +59,7 @@ void		drow_one_texture(int x, int y, t_mlx *mlx, char *nameimage);
 void		drow_movement(int x, int y, t_mlx *mlx, char *nameimage);
 int			key_hook(int keycode, t_mlx *mlx);
 //Window.c
-t_mlx		*new_mlx(void);
+t_mlx		*new_mlx(char **av);
 t_coords	*calculate_window_size(char **map);
 void		generate_map(char *map, t_mlx *mlx, int y);
 int			close_window(t_mlx *mlx);

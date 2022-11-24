@@ -53,7 +53,8 @@ ${NAME}: ${OBJS} $(LIBFT) $(MINILIB) $(PRINTF)
 clean:
 			${RM} ${OBJS}
 			make fclean -C $(LIBFT)
-			make clean -C $(MLX)
+			make clean -C $(MINILIB)
+			make fclean -C $(PRINTF)
 
 fclean:		clean
 			${RM} ${NAME} libmlx.dylib *.a

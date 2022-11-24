@@ -74,7 +74,7 @@ int	main(int ac, char **av)
 	(void)av;
 	if (ac < 2)
 		return (1);
-	mlx = new_mlx();
+	mlx = new_mlx(av);
 	map = mlx->map;
 	if (!check_map(mlx))
 		close_window(mlx);
@@ -87,7 +87,7 @@ int	main(int ac, char **av)
 		i += 128;
 		j++;
 	}
-	ft_printf("test\n");
+//	ft_printf("test\n");
 	mlx_hook(mlx->mlx_win, 2, 1L << 0, key_hook, mlx);
 	mlx_hook(mlx->mlx_win,17, 0, close_window, mlx);
 	mlx_loop(mlx->mlx);

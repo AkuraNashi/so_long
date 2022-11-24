@@ -14,7 +14,7 @@
 
 ///Permet  de calculer la taille de la fenetre en fonction de la map
 /// \return la structure mlx
-t_mlx	*new_mlx(void)
+t_mlx	*new_mlx(char **av)
 {
 	t_mlx		*w;
 	t_coords	*temp;
@@ -31,6 +31,7 @@ t_mlx	*new_mlx(void)
 	w->player = new_player(w->map->map);
 	w->move = 0;
 	w->coins = count_coins(w->map->map);
+	w->file = av[1];
 	return (w);
 }
 

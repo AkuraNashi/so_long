@@ -14,11 +14,28 @@
 /// Va checker les differents cas d'erreur possibles avec la map
 /// \param mlx structure de la windows
 /// \return 1 si la map passe sinon 0
-int check_map(t_mlx *mlx)
+
+//Check la bordure
+//Check pathfinding
+//Ajouter ennemie
+//Ajouter animation
+//Ajouter moves dans la fenetre
+int	check_map(t_mlx *mlx)
 {
+	int	i;
+
+	i = ft_strlen(mlx->file);
+	if (!(mlx->file[i - 1] == 'b'
+			&& mlx->file[i - 2] == 'e'
+			&& mlx->file[i - 3] == 'r'
+			&& mlx->file[i - 4] == '.'))
+	{
+		ft_printf("Error\nMauvaise extension de fichier\nClosing...\n");
+		return (0);
+	}
 	if (!check_rectangle(mlx->map->map))
 	{
-
+		ft_printf("Error\nLa map n'est pas un rectangle\nClosing...\n");
 		return (0);
 	}
 	return (1);
