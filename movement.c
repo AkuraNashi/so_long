@@ -13,29 +13,29 @@
 #include "so_long.h"
 #include <stdlib.h>
 
+/// Permet de se deplacer vers la droite en appuyant sur D
+/// \param mlx structure de la window
+
 void	movement_right(t_mlx *mlx)
 {
 	t_coords	*loc;
 	t_map		*map;
-	void		*img;
 
 	loc = mlx->player->coords;
 	map = mlx->map;
-	if (map->map[loc->y][loc->x + 1] != '1' && map->map[loc->y][loc->x + 1] != 'E')
+	if (mlx->player->coins == mlx->coins
+		&& map->map[loc->y][loc->x + 1] == 'E')
 	{
-		if (mlx->player->coins == mlx->coins && map->map[loc->y][loc->x + 1] == 'E')
-		{
-			system("clear");
-			printf("Gagnez !!!!\n\n");
-			close_window(mlx);
-		}
-		img = mlx_xpm_file_to_image(mlx->mlx, "./Terrain.xpm",
-				&mlx->img_width, &mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (loc->x * 128), loc->y * 128);
-		img = mlx_xpm_file_to_image(mlx->mlx, "./Player.xpm",
-				&mlx->img_width, &mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (loc->x * 128) + 128, loc->y * 128);
-		if(map->map[loc->y][loc->x + 1] == 'C')
+		system("clear");
+		printf("Gagnez !!!!\n\n");
+		close_window(mlx);
+	}
+	else if (map->map[loc->y][loc->x + 1] != '1' &&
+	map->map[loc->y][loc->x + 1] != 'E')
+	{
+		drow_movement(loc->x, loc->y, mlx, "Terrain.xpm");
+		drow_movement(loc->x + 1, loc->y, mlx, "Player.xpm");
+		if (map->map[loc->y][loc->x + 1] == 'C')
 		{
 			map->map[loc->y][loc->x + 1] = '0';
 			mlx->player->coins++;
@@ -43,34 +43,30 @@ void	movement_right(t_mlx *mlx)
 		mlx->player->coords->x += 1;
 		mlx->move++;
 	}
-	img = NULL;
 }
+/// Permet de se deplacer sur la gauche en appuyant sur a
+/// \param mlx structure de la window
 
 void	movement_left(t_mlx *mlx)
 {
 	t_coords	*loc;
 	t_map		*map;
-	void		*img;
-	int 		move;
 
-	move = 0;
 	loc = mlx->player->coords;
 	map = mlx->map;
-	if (map->map[loc->y][loc->x - 1] != '1' && map->map[loc->y][loc->x - 1] != 'E')
+	if (mlx->player->coins == mlx->coins
+		&& map->map[loc->y][loc->x + 1] == 'E')
 	{
-		if (mlx->player->coins == mlx->coins && map->map[loc->y][loc->x - 1] == 'E')
-		{
-			system("clear");
-			printf("Gagnez !!!!\n\n");
-			close_window(mlx);
-		}
-		img = mlx_xpm_file_to_image(mlx->mlx, "./Terrain.xpm",
-									&mlx->img_width, &mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (loc->x * 128), loc->y * 128);
-		img = mlx_xpm_file_to_image(mlx->mlx, "./Player.xpm",
-									&mlx->img_width, &mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (loc->x * 128) - 128, loc->y * 128);
-		if(map->map[loc->y][loc->x - 1] == 'C')
+		system("clear");
+		printf("Gagnez !!!!\n\n");
+		close_window(mlx);
+	}
+	else if (map->map[loc->y][loc->x - 1] != '1'
+		&& map->map[loc->y][loc->x - 1] != 'E')
+	{
+		drow_movement(loc->x, loc->y, mlx, "Terrain.xpm");
+		drow_movement(loc->x - 1, loc->y, mlx, "Player.xpm");
+		if (map->map[loc->y][loc->x - 1] == 'C')
 		{
 			map->map[loc->y][loc->x - 1] = '0';
 			mlx->player->coins++;
@@ -78,32 +74,30 @@ void	movement_left(t_mlx *mlx)
 		mlx->player->coords->x -= 1;
 		mlx->move++;
 	}
-	img = NULL;
 }
+/// Permet de se deplacer vers le haut en appuyant sur W
+/// \param mlx structure de la window
 
 void	movement_up(t_mlx *mlx)
 {
 	t_coords	*loc;
 	t_map		*map;
-	void		*img;
 
 	loc = mlx->player->coords;
 	map = mlx->map;
-	if (map->map[loc->y - 1][loc->x] != '1' && map->map[loc->y - 1][loc->x] != 'E')
+	if (mlx->player->coins == mlx->coins
+		&& map->map[loc->y][loc->x + 1] == 'E')
 	{
-		if (mlx->player->coins == mlx->coins && map->map[loc->y - 1][loc->x] == 'E')
-		{
-			system("clear");
-			printf("Gagnez !!!!\n\n");
-			close_window(mlx);
-		}
-		img = mlx_xpm_file_to_image(mlx->mlx, "./Terrain.xpm",
-									&mlx->img_width, &mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (loc->x * 128), loc->y * 128);
-		img = mlx_xpm_file_to_image(mlx->mlx, "./Player.xpm",
-									&mlx->img_width, &mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (loc->x * 128), (loc->y * 128)- 128);
-		if(map->map[loc->y - 1][loc->x] == 'C')
+		system("clear");
+		printf("Gagnez !!!!\n\n");
+		close_window(mlx);
+	}
+	else if (map->map[loc->y - 1][loc->x] != '1'
+		&& map->map[loc->y - 1][loc->x] != 'E')
+	{
+		drow_movement(loc->x, loc->y, mlx, "Terrain.xpm");
+		drow_movement(loc->x, loc->y - 1, mlx, "Player.xpm");
+		if (map->map[loc->y - 1][loc->x] == 'C')
 		{
 			map->map[loc->y - 1][loc->x] = '0';
 			mlx->player->coins++;
@@ -111,32 +105,30 @@ void	movement_up(t_mlx *mlx)
 		mlx->player->coords->y -= 1;
 		mlx->move++;
 	}
-	img = NULL;
 }
+/// Permet de se deplacer vers le bas en appuyant sur S
+/// \param mlx structure de la window
 
 void	movement_down(t_mlx *mlx)
 {
 	t_coords	*loc;
 	t_map		*map;
-	void		*img;
 
 	loc = mlx->player->coords;
 	map = mlx->map;
-	if (map->map[loc->y + 1][loc->x] != '1' && map->map[loc->y + 1][loc->x] != 'E')
+	if (mlx->player->coins == mlx->coins
+		&& map->map[loc->y][loc->x + 1] == 'E')
 	{
-		if (mlx->player->coins == mlx->coins && map->map[loc->y + 1][loc->x] == 'E')
-		{
-			system("clear");
-			printf("Gagnez !!!!\n\n");
-			close_window(mlx);
-		}
-		img = mlx_xpm_file_to_image(mlx->mlx, "./Terrain.xpm",
-									&mlx->img_width, &mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (loc->x * 128), loc->y * 128);
-		img = mlx_xpm_file_to_image(mlx->mlx, "./Player.xpm",
-									&mlx->img_width, &mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (loc->x * 128), (loc->y * 128) + 128);
-		if(map->map[loc->y + 1][loc->x] == 'C')
+		system("clear");
+		printf("Gagnez !!!!\n\n");
+		close_window(mlx);
+	}
+	else if (map->map[loc->y + 1][loc->x] != '1'
+		&& map->map[loc->y + 1][loc->x] != 'E')
+	{
+		drow_movement(loc->x, loc->y, mlx, "Terrain.xpm");
+		drow_movement(loc->x, loc->y + 1, mlx, "Player.xpm");
+		if (map->map[loc->y + 1][loc->x] == 'C')
 		{
 			map->map[loc->y + 1][loc->x] = '0';
 			mlx->player->coins++;
@@ -144,5 +136,4 @@ void	movement_down(t_mlx *mlx)
 		mlx->player->coords->y += 1;
 		mlx->move++;
 	}
-	img = NULL;
 }

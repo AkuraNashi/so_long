@@ -12,61 +12,43 @@
 
 #include "so_long.h"
 
-//Remplit le **map de la t_struct via le fichier .txt
+/// Permet de generer une image dans la window lors d'un deplacement
+/// \param x Coordonnees x de l'image
+/// \param y Coordonees y de l'image
+/// \param mlx structure de la window
+/// \param nameimage nom de l'image a generer
 
-char	**fillmap(char	*file)
+void	drow_movement(int x, int y, t_mlx *mlx, char *nameimage)
 {
-	char	*line;
-	char	**temp;
-	t_map	*map;
-	int		fd;
-	size_t	i;
+	void	*img;
 
-	fd = open(file, O_RDONLY);
-	line = get_next_line(fd);
-	i = ft_strlen(line) - 1;
-	temp = malloc(i * sizeof(char *));
-	if (!temp)
-		return (NULL);
-	map = malloc(sizeof(t_map));
-	if (!map)
-		return (NULL);
-	i = 0;
-	while (line)
-	{
-		temp[i] = ft_substr(line, 0, ft_strlen(line));
-		if (temp[i] == NULL)
-			return (NULL);
-		line = get_next_line(fd);
-		i++;
-	}
-	temp[i] = NULL;
-	map->map = temp;
-	close(fd);
-	return (map->map);
+	img = mlx_xpm_file_to_image(mlx->mlx, nameimage, &mlx->w, &mlx->h);
+	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, x * 128, y * 128);
 }
 
-//Cree une map
+/// Permet de generer une image dans la window
+/// \param x Coordonnees x de l'image
+/// \param y Coordonees y de l'image
+/// \param mlx structure de la window
+/// \param nameimage nom de l'image a generer
 
-t_map	*new_map(void)
+void	drow_one_texture(int x, int y, t_mlx *mlx, char *nameimage)
 {
-	t_map	*map;
+	void	*img;
 
-	map = malloc(sizeof(*map));
-	map->coords_max = malloc(sizeof(*(map->coords_max)));
-	if (!map || !map->coords_max)
-		return (NULL);
-	map->map = fillmap("map1.txt");
-	map->coords_max = calculate_window_size(map->map);
-	return (map);
+	img = mlx_xpm_file_to_image(mlx->mlx, nameimage, &mlx->w, &mlx->h);
+	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, x, y);
 }
+
+/// Hook sur les touches afin de se deplacer, fermer la fenetre etc
+/// \param keycode la touche envoyer
+/// \param mlx structure de la window
+/// \return
 
 int	key_hook(int keycode, t_mlx *mlx)
 {
 	if (keycode == 53)
-	{
 		close_window(mlx);
-	}
 	if (keycode == 2)
 		movement_right(mlx);
 	else if (keycode == 0)
@@ -75,21 +57,27 @@ int	key_hook(int keycode, t_mlx *mlx)
 		movement_up(mlx);
 	else if (keycode == 1)
 		movement_down(mlx);
-	//printf("move : %d\n", mlx->move);
+	else if (keycode == 7)
+		check_coins(mlx);
+	printf("Moves : [%d]\n", mlx->move);
 	return (0);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_map		*map;
 	t_mlx		*mlx;
 	int			i;
 	int			j;
 
-	map = new_map();
-	mlx = new_mlx(map);
-	mlx->player = new_player(map->map);
-	mlx->map = map;
+	(void)ac;
+	(void)av;
+	if (ac < 2)
+		return (1);
+	mlx = new_mlx();
+	map = mlx->map;
+	if (!check_map(mlx))
+		close_window(mlx);
 	i = 0;
 	j = 0;
 	while (map->map[j])
@@ -99,7 +87,8 @@ int	main(void)
 		i += 128;
 		j++;
 	}
-	check_coins(mlx);
-	mlx_key_hook(mlx->mlx_win, key_hook, mlx);
+	ft_printf("test\n");
+	mlx_hook(mlx->mlx_win, 2, 1L << 0, key_hook, mlx);
+	mlx_hook(mlx->mlx_win,17, 0, close_window, mlx);
 	mlx_loop(mlx->mlx);
 }

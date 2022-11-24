@@ -12,7 +12,8 @@
 
 NAME 		= so_long
 LIBFT		= libft
-MINILIB		= minilib
+MINILIB		= mlx
+PRINTF		= printf
 CFLAGS 		= -Wall -Wextra -Werror -Imlx -I.
 CC			= cc
 SRC_PATH	= ./
@@ -22,35 +23,41 @@ SRC 		= 	main.c						\
 				movement.c					\
 				window.c					\
 				path_finding.c				\
+				map.c						\
+				checking.c					\
 				gnl/get_next_line.c			\
 				gnl/get_next_line_utils.c
 SRCS = $(addprefix $(SRC_PATH),$(SRC))
 OBJS		= ${SRCS:.c=.o}
 
-all: ${NAME}
+all: printf ${NAME}
 
 $(LIBFT):
 			make -C $(LIBFT)
-			mv ./libft/libft.a libft.a
-			ar rcs libft.a ${OBJS}
+			cp ./libft/libft.a libft.a
 
-$(MLX):
+$(MINILIB):
 			make -C $(MINILIB)
-			mv ./mlx/mlx.a mlx.a
-			ar rcs mlx.a ${OBJS}
+			cp ./mlx/libmlx.dylib libmlx.dylib
+
+printf:
+			make -C $(PRINTF)
+			cp ./printf/libftprintf.a libftprintf.a
 
 %.o: %.c
 		${CC} ${CFLAGS} -c $< -o $@
 
-${NAME}: ${OBJS} $(LIBFT) $(MLX)
-		$(CC)  ${OPTIONS} -lmlx -L. -Llibft -I. -lft -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
+${NAME}: ${OBJS} $(LIBFT) $(MINILIB) $(PRINTF)
+		$(CC)  ${OPTIONS} -lmlx -lftprintf -L. -Llibft -I. -lft -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
 
 clean:
-			${RM} ${OBJS} ${OBJS_B}
+			${RM} ${OBJS}
+			make fclean -C $(LIBFT)
+			make clean -C $(MLX)
 
 fclean:		clean
-			${RM} ${NAME}
+			${RM} ${NAME} libmlx.dylib *.a
 
 re:			fclean all
 
-.PHONY: re ignore fclean clean all $(LIBFT) $(NAME) $(MINILIB)
+.PHONY: re ignore fclean clean all $(LIBFT) $(NAME) $(MINILIB) $(PRINTF)

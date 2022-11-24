@@ -12,33 +12,31 @@
 
 #include "so_long.h"
 
-//Permet  de calculer la taille
-// de la fenetre en fonction de la map
-
-t_mlx	*new_mlx(t_map *map)
+///Permet  de calculer la taille de la fenetre en fonction de la map
+/// \return la structure mlx
+t_mlx	*new_mlx(void)
 {
-	t_mlx	*window;
-	t_coords *temp;
+	t_mlx		*w;
+	t_coords	*temp;
 
-	temp = malloc(sizeof(*temp));
-	window = malloc(sizeof(*window));
-	window->mlx = mlx_init();
-	window->mlx_win = mlx_new_window(window->mlx, map->coords_max->x,
-			map->coords_max->y, "SO_SSBU");
-	window->img_height = 0;
-	window->img_width = 0;
-	temp->x = 0;
-	temp->y = 0;
-	window->cp = temp;
-	window->map = new_map();
-	window->player = new_player(map->map);
-	window->move = 0;
-	window->coins = count_coins(map->map);
-	return (window);
+	temp = ft_calloc(1, sizeof(*temp));
+	w = malloc(sizeof(*w));
+	w->mlx = mlx_init();
+	w->map = new_map();
+	w->mlx_win = mlx_new_window(w->mlx, w->map->c_max->x,
+			w->map->c_max->y, "SO_SSBU");
+	w->h = 0;
+	w->w = 0;
+	w->cp = temp;
+	w->player = new_player(w->map->map);
+	w->move = 0;
+	w->coins = count_coins(w->map->map);
+	return (w);
 }
 
-//Calcule la taille de la fenetre
-
+/// Calcule la taille de la fenetre
+/// \param map le tableau en 2d
+/// \return structure coords contenant la taille de la window
 t_coords	*calculate_window_size(char **map)
 {
 	t_coords	*coords;
@@ -47,78 +45,54 @@ t_coords	*calculate_window_size(char **map)
 
 	coords = malloc(sizeof(*coords));
 	i = 0;
-	j = 0;
 	coords->x = 0;
 	coords->y = 0;
 	while (map[i])
 	{
+		j = 0;
 		while (map[i][j])
-		{
-			if (map[i][j] != '\n')
-				coords->x += 128;
 			j++;
-		}
-		coords->y += 128;
 		i++;
 	}
+	coords->y = 128 * i;
+	coords->x = 128 * j;
 	return (coords);
 }
 
-//Permet d'afficher graphiquement la map
+/// Permet d'afficher graphiquement la map
+/// \param map la chaine de string
+/// \param mlx la structure windows
+/// \param y la hauteur ou placer les tiles
 
 void	generate_map(char *map, t_mlx *mlx, int y)
 {
 	int		i;
 	int		x;
-	void	*img;
 
 	i = 0;
 	x = 0;
 	while (map[i])
 	{
 		if (map[i] == '1')
-		{
-			img = mlx_xpm_file_to_image(mlx->mlx, "./Block.xpm",
-					&mlx->img_width, &mlx->img_height);
-			mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, x, y);
-			x += 128;
-		}
+			drow_one_texture(x, y, mlx, "Block.xpm");
 		else if (map[i] == 'C')
-		{
-			img = mlx_xpm_file_to_image(mlx->mlx, "./Coin.xpm",
-					&mlx->img_width, &mlx->img_height);
-			mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, x, y);
-			x += 128;
-		}
+			drow_one_texture(x, y, mlx, "Coin.xpm");
 		else if (map[i] == 'E')
-		{
-			img = mlx_xpm_file_to_image(mlx->mlx, "./Exit.xpm",
-					&mlx->img_width, &mlx->img_height);
-			mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, x, y);
-			x += 128;
-		}
+			drow_one_texture(x, y, mlx, "Exit.xpm");
 		else if (map[i] == 'P')
-		{
-			img = mlx_xpm_file_to_image(mlx->mlx, "./Player.xpm",
-					&mlx->img_width, &mlx->img_height);
-			mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, x, y);
-			x += 128;
-		}
+			drow_one_texture(x, y, mlx, "Player.xpm");
 		else
-		{
-			img = mlx_xpm_file_to_image(mlx->mlx, "./Terrain.xpm",
-					&mlx->img_width, &mlx->img_height);
-			mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, x, y);
-			x += 128;
-		}
+			drow_one_texture(x, y, mlx, "Terrain.xpm");
+		x += 128;
 		i++;
 	}
 }
+///Ferme la fenetre envoyer en parametres
+/// \param mlx la structure window
 
-void	close_window(t_mlx *mlx)
+int	close_window(t_mlx *mlx)
 {
-	free(mlx->mlx_win);
-	free(mlx->mlx);
+	mlx_destroy_window(mlx->mlx, mlx->mlx_win);
 	free(mlx);
 	exit(0);
 }

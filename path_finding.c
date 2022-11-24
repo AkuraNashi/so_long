@@ -11,70 +11,57 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
-//i = y
-//j = x
-int	check_adjacent(t_mlx *mlx)
+///Check la coords XY dans le tableau afin de savoir si c'est un mur ou non
+/// \param mlx la structure window
+/// \param x la parcelle X
+/// \param y la parcelle Y
+/// \return
+
+int	check_adjacent(t_mlx *mlx, int x, int y)
 {
-	void	*img;
-	t_coords *c;
-	char	**map;
+	t_coords	*c;
+	char		**map;
 
 	map = mlx->map->map;
-	c = mlx->cp;
-	//Haut
-	if (map[c->y - 1][c->x] != '1')
+	c = malloc(sizeof(*c));
+	c->x = x;
+	c->y = y;
+	if (map[c->y][c->x] != '1')
 	{
-		img = mlx_xpm_file_to_image(mlx->mlx, "./Blue.xpm",
-									&mlx->img_width, &mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (128 * c->x), (128 * c->y) - 128);
-		sleep(1);
-	}
-	//Droite
-	if (map[c->y][c->x + 1] != '1')
-	{
-		img = mlx_xpm_file_to_image(mlx->mlx, "./Blue.xpm",
-									&mlx->img_width, &mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (128 * c->x) + 128, (128 * c->y));
-		sleep(1);
-	}
-	//Bas
-	if (map[c->y + 1][c->x] != '1')
-	{
-		img = mlx_xpm_file_to_image(mlx->mlx, "./Blue.xpm",
-									&mlx->img_width, &mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (128 * c->x), (128 * c->y) + 128);
-		sleep(1);
-	}
-	//Gauche
-	if (map[c->y][c->x - 1] != '1')
-	{
-		img = mlx_xpm_file_to_image(mlx->mlx, "./Blue.xpm",
-									&mlx->img_width, &mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, (128 * c->x) - 128, (128 * c->y));
-		sleep(1);
+		drow_one_texture(c->x, c->y, mlx, "Blue.xpm");
+		map[c->y][c->x] = 'B';
 	}
 	return (0);
 }
+///Check les differentes tiles autour de la coordonnees
+/// \param mlx structure de la window
+/// \param x coordonnees x de la matrice
+/// \param y coordonnees x de la matrice
 
-void	recursive_path(t_mlx *mlx)
+void	recursive_path(t_mlx *mlx, int x, int y)
 {
-	char		**map;
+	char	**map;
 
 	map = mlx->map->map;
-	check_adjacent(mlx);
-	mlx_loop_hook(mlx->mlx, check_adjacent, &mlx);
-
+	if (map[y][x] == '1' || map[y][x] == 'B')
+		return ;
+	check_adjacent(mlx, x, y);
+	recursive_path(mlx, x, y - 1);
+	recursive_path(mlx, x + 1, y);
+	recursive_path(mlx, x, y + 1);
+	recursive_path(mlx, x - 1, y);
 }
+/// Check le nb de coins dans la matrice
+/// \param mlx structure de la window
 
 void	check_coins(t_mlx *mlx)
 {
-	char		**map;
-	int			i;
-	int			j;
+	char	**map;
+	int		i;
+	int		j;
 
 	map = mlx->map->map;
 	i = 0;
-	j = 0;
 	while (map[i])
 	{
 		j = 0;
@@ -84,7 +71,7 @@ void	check_coins(t_mlx *mlx)
 			{
 				mlx->cp->x = j;
 				mlx->cp->y = i;
-				recursive_path(mlx);
+				recursive_path(mlx, j, i);
 			}
 			j++;
 		}

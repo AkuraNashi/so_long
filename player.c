@@ -12,7 +12,10 @@
 
 #include "so_long.h"
 
-//Ajouter nom du joueur en parametres ?
+/// Cree une structure player
+/// \param map tableau en 2d
+/// permettant de savoir ou est le joueur
+/// \return la structure player
 t_entity	*new_player(char **map)
 {
 	t_entity	*player;
@@ -22,6 +25,10 @@ t_entity	*new_player(char **map)
 	player->coins = 0;
 	return (player);
 }
+
+///Permet de savoir ou est le joueur dans la matrice
+/// \param map tableau en 2d
+/// \return return la coordonnes du joueur
 
 t_coords	*find_player(char **map)
 {
@@ -52,10 +59,14 @@ t_coords	*find_player(char **map)
 	return (coords);
 }
 
-int count_coins(char **map)
+///Compte le nb de coins dans la map
+/// \param map tableau en 2d
+/// \return la structure window
+
+int	count_coins(char **map)
 {
 	int	i;
-	int j;
+	int	j;
 	int	coins;
 
 	coins = 0;
