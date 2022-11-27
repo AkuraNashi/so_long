@@ -45,24 +45,6 @@ void	drow_one_texture(int x, int y, t_mlx *mlx, char *nameimage)
 /// \param mlx structure de la window
 /// \return
 
-int	key_hook(int keycode, t_mlx *mlx)
-{
-	if (keycode == 53)
-		close_window(mlx);
-	if (keycode == 2)
-		movement_right(mlx);
-	else if (keycode == 0)
-		movement_left(mlx);
-	else if (keycode == 13)
-		movement_up(mlx);
-	else if (keycode == 1)
-		movement_down(mlx);
-	else if (keycode == 7)
-		check_coins(mlx);
-	printf("Moves : [%d]\n", mlx->move);
-	return (0);
-}
-
 int	main(int ac, char **av)
 {
 	t_map		*map;

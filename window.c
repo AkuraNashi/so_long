@@ -22,7 +22,7 @@ t_mlx	*new_mlx(char **av)
 	temp = ft_calloc(1, sizeof(*temp));
 	w = malloc(sizeof(*w));
 	w->mlx = mlx_init();
-	w->map = new_map();
+	w->map = new_map(av[1]);
 	w->mlx_win = mlx_new_window(w->mlx, w->map->c_max->x,
 			w->map->c_max->y, "SO_SSBU");
 	w->h = 0;

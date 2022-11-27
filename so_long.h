@@ -68,9 +68,10 @@ t_entity	*new_player(char **map);
 t_coords	*find_player(char **map);
 int			count_coins(char **map);
 //Map.c
-t_map		*new_map(void);
+t_map		*new_map(char	*str);
 char		**fillmap(char	*file);
 size_t		ft_strnllen(const char *str);
+int			count_lines(char *file);
 //Movement.c
 void		movement_right(t_mlx *mlx);
 void		movement_left(t_mlx *mlx);

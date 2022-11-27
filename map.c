@@ -40,7 +40,7 @@ int	count_lines(char *file)
 ///Cree une map
 /// \return la structure map
 
-t_map	*new_map(void)
+t_map	*new_map(char *str)
 {
 	t_map	*map;
 
@@ -48,7 +48,7 @@ t_map	*new_map(void)
 	map->c_max = malloc(sizeof(*(map->c_max)));
 	if (!map || !map->c_max)
 		return (NULL);
-	map->map = fillmap("map1.txt");
+	map->map = fillmap(str);
 	map->c_max = calculate_window_size(map->map);
 	return (map);
 }

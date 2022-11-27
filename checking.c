@@ -11,26 +11,73 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
-/// Va checker les differents cas d'erreur possibles avec la map
-/// \param mlx structure de la windows
-/// \return 1 si la map passe sinon 0
 
-//Check la bordure
+/// Check si toute la ligne correspond a un mur
+/// \param str la ligne a checker
+/// \return 1 si la ligne ne contient que des murs
+int	check_str(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '1')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+///Check la bordure
+/// \param mlx structure de la window
+/// \return 0 si c'est faux 1 si c'est bon
+int	check_border(t_mlx *mlx)
+{
+	char	**map;
+	int		i;
+	int		length;
+
+	map = mlx->map->map;
+	i = 0;
+	length = ft_strlen(map[i]) - 1;
+	while (map[i])
+	{
+		if (i == 0 || i == count_lines(mlx->file))
+		{
+			if (!check_str(map[i]))
+				return (0);
+		}
+		else if (map[i][0] != '1' || map[i][length] != '1')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 //Check pathfinding
 //Ajouter ennemie
 //Ajouter animation
 //Ajouter moves dans la fenetre
+/// Va checker les differents cas d'erreur possibles avec la map
+/// \param mlx structure de la windows
+/// \return 1 si la map passe sinon 0
 int	check_map(t_mlx *mlx)
 {
 	int	i;
 
-	i = ft_strlen(mlx->file);
-	if (!(mlx->file[i - 1] == 'b'
+	i = ft_strnllen(mlx->file);
+	if (!(mlx->file[i - 1] == 'r'
 			&& mlx->file[i - 2] == 'e'
-			&& mlx->file[i - 3] == 'r'
+			&& mlx->file[i - 3] == 'b'
 			&& mlx->file[i - 4] == '.'))
 	{
 		ft_printf("Error\nMauvaise extension de fichier\nClosing...\n");
+		return (0);
+	}
+	if (!check_border(mlx))
+	{
+		ft_printf("Error\nLa map n'est pas entouré de mur\nClosing...\n");
 		return (0);
 	}
 	if (!check_rectangle(mlx->map->map))

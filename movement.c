@@ -27,7 +27,7 @@ void	movement_right(t_mlx *mlx)
 		&& map->map[loc->y][loc->x + 1] == 'E')
 	{
 		system("clear");
-		printf("Gagnez !!!!\n\n");
+		ft_printf("Gagnez !!!!\n\n");
 		close_window(mlx);
 	}
 	else if (map->map[loc->y][loc->x + 1] != '1' &&
@@ -58,7 +58,7 @@ void	movement_left(t_mlx *mlx)
 		&& map->map[loc->y][loc->x + 1] == 'E')
 	{
 		system("clear");
-		printf("Gagnez !!!!\n\n");
+		ft_printf("Gagnez !!!!\n\n");
 		close_window(mlx);
 	}
 	else if (map->map[loc->y][loc->x - 1] != '1'
@@ -89,7 +89,7 @@ void	movement_up(t_mlx *mlx)
 		&& map->map[loc->y][loc->x + 1] == 'E')
 	{
 		system("clear");
-		printf("Gagnez !!!!\n\n");
+		ft_printf("Gagnez !!!!\n\n");
 		close_window(mlx);
 	}
 	else if (map->map[loc->y - 1][loc->x] != '1'
@@ -120,7 +120,7 @@ void	movement_down(t_mlx *mlx)
 		&& map->map[loc->y][loc->x + 1] == 'E')
 	{
 		system("clear");
-		printf("Gagnez !!!!\n\n");
+		ft_printf("Gagnez !!!!\n\n");
 		close_window(mlx);
 	}
 	else if (map->map[loc->y + 1][loc->x] != '1'
@@ -136,4 +136,26 @@ void	movement_down(t_mlx *mlx)
 		mlx->player->coords->y += 1;
 		mlx->move++;
 	}
+}
+
+/// Permet d'effectuer des actions via les entrees claviers
+/// \param keycode la touche du claviers
+/// \param mlx structure de la window
+/// \return
+int	key_hook(int keycode, t_mlx *mlx)
+{
+	if (keycode == 53)
+		close_window(mlx);
+	if (keycode == 2)
+		movement_right(mlx);
+	else if (keycode == 0)
+		movement_left(mlx);
+	else if (keycode == 13)
+		movement_up(mlx);
+	else if (keycode == 1)
+		movement_down(mlx);
+	else if (keycode == 7)
+		check_coins(mlx);
+	ft_printf("Moves : [%d]\n", mlx->move);
+	return (0);
 }
