@@ -23,6 +23,9 @@ t_mlx	*new_mlx(char **av)
 	w = malloc(sizeof(*w));
 	w->mlx = mlx_init();
 	w->map = new_map(av[1]);
+	if (w->map == NULL) {
+		return (NULL);
+	}
 	w->mlx_win = mlx_new_window(w->mlx, w->map->c_max->x,
 			w->map->c_max->y, "SO_SSBU");
 	w->h = 0;
@@ -31,6 +34,8 @@ t_mlx	*new_mlx(char **av)
 	w->player = new_player(w->map->map);
 	w->move = 0;
 	w->coins = count_coins(w->map->map);
+	w->start = count_player(w->map->map);
+	w->exit = count_exit(w->map->map);
 	w->file = av[1];
 	return (w);
 }
@@ -55,8 +60,8 @@ t_coords	*calculate_window_size(char **map)
 			j++;
 		i++;
 	}
-	coords->y = 128 * i;
-	coords->x = 128 * j;
+	coords->y = (128 * i) + 128;
+	coords->x = (128 * j);
 	return (coords);
 }
 
@@ -64,36 +69,74 @@ t_coords	*calculate_window_size(char **map)
 /// \param map la chaine de string
 /// \param mlx la structure windows
 /// \param y la hauteur ou placer les tiles
-
-void	generate_map(char *map, t_mlx *mlx, int y)
+void	generate_map(t_mlx *mlx, int x, int y)
 {
 	int		i;
-	int		x;
+	int		j;
 
 	i = 0;
-	x = 0;
-	while (map[i])
+	while (mlx->map->map[i])
 	{
-		if (map[i] == '1')
-			drow_one_texture(x, y, mlx, "Block.xpm");
-		else if (map[i] == 'C')
-			drow_one_texture(x, y, mlx, "Coin.xpm");
-		else if (map[i] == 'E')
-			drow_one_texture(x, y, mlx, "Exit.xpm");
-		else if (map[i] == 'P')
-			drow_one_texture(x, y, mlx, "Player.xpm");
-		else
-			drow_one_texture(x, y, mlx, "Terrain.xpm");
-		x += 128;
+		j = 0;
+		while (mlx->map->map[i][j])
+		{
+			parse_texture(mlx, mlx->map->map[i][j], x, y);
+			x += 128;
+			j++;
+		}
+		x = 0;
+		y += 128;
 		i++;
 	}
 }
+
+/// Permet de check la texture a dessiner
+/// \param mlx la structure de la window
+/// \param c la charactere a check
+/// \param x coordonnees horizontal
+/// \param y coordonnees verticale
+void	parse_texture(t_mlx *mlx, char c, int x, int y)
+{
+	if (c == '1')
+		drow_one_texture(x, y, mlx, "Block.xpm");
+	else if (c == 'C')
+		drow_one_texture(x, y, mlx, "Coin.xpm");
+	else if (c == 'E')
+		drow_one_texture(x, y, mlx, "Exit.xpm");
+	else if (c == 'P')
+		drow_one_texture(x, y, mlx, "Player.xpm");
+	else if (c == 'B')
+		drow_one_texture(x, y, mlx, "Blue.xpm");
+	else
+		drow_one_texture(x, y, mlx, "Terrain.xpm");
+}
+
+void	free_tab(void **tab)
+{
+	int	i;
+
+	i = 0;
+	while(tab[i])
+	{
+		free(tab[i]);
+		tab[i] = NULL;
+		i++;
+	}
+}
+
 ///Ferme la fenetre envoyer en parametres
 /// \param mlx la structure window
 
 int	close_window(t_mlx *mlx)
 {
 	mlx_destroy_window(mlx->mlx, mlx->mlx_win);
+	free(mlx->cp);
+	free(mlx->player);
+	free(mlx->player->coords);
+	free_tab((void *)mlx->player->img);
+	free_tab((void *)mlx->map->map);
 	free(mlx);
 	exit(0);
 }
+
+

@@ -17,10 +17,13 @@ PRINTF		= printf
 CFLAGS 		= -Wall -Wextra -Werror -Imlx -I.
 CC			= cc
 SRC_PATH	= ./
-OPTIONS		= -Ilibft -Lmlx -g3 -fsanitize=address
+OPTIONS		= -Ilibft -Lmlx -g3
 SRC 		= 	main.c						\
+				count.c						\
+				check_name.c				\
 				player.c					\
 				movement.c					\
+				moves_str.c					\
 				window.c					\
 				path_finding.c				\
 				map.c						\
@@ -45,7 +48,7 @@ printf:
 			cp ./printf/libftprintf.a libftprintf.a
 
 %.o: %.c
-		${CC} ${CFLAGS} -c $< -o $@
+		${CC} ${CFLAGS} -c $< -o $@ -g3
 
 ${NAME}: ${OBJS} $(LIBFT) $(MINILIB) $(PRINTF)
 		$(CC)  ${OPTIONS} -lmlx -lftprintf -L. -Llibft -I. -lft -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)

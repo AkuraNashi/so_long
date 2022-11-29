@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strlenjoin(const char *s1, const char *s2, int len)
+char	*ft_strljoin(const char *s1, const char *s2, int len)
 {
 	char	*str;
 	char	*ret;
@@ -76,7 +76,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (ft_strlen(src));
 }
 
-char	*ft_strlendup(const char *s1, int size)
+char	*ft_strldup(const char *s1, int size)
 {
 	char	*p;
 

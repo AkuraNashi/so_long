@@ -23,10 +23,11 @@ void	movement_right(t_mlx *mlx)
 
 	loc = mlx->player->coords;
 	map = mlx->map;
+	if (map->map[loc->y][loc->x + 1] == 'B')
+		close_window(mlx);
 	if (mlx->player->coins == mlx->coins
 		&& map->map[loc->y][loc->x + 1] == 'E')
 	{
-		system("clear");
 		ft_printf("Gagnez !!!!\n\n");
 		close_window(mlx);
 	}
@@ -34,14 +35,8 @@ void	movement_right(t_mlx *mlx)
 	map->map[loc->y][loc->x + 1] != 'E')
 	{
 		drow_movement(loc->x, loc->y, mlx, "Terrain.xpm");
-		drow_movement(loc->x + 1, loc->y, mlx, "Player.xpm");
-		if (map->map[loc->y][loc->x + 1] == 'C')
-		{
-			map->map[loc->y][loc->x + 1] = '0';
-			mlx->player->coins++;
-		}
-		mlx->player->coords->x += 1;
-		mlx->move++;
+		check_movement(mlx, loc->x + 1, loc->y);
+		move_tostr(mlx);
 	}
 }
 /// Permet de se deplacer sur la gauche en appuyant sur a
@@ -55,9 +50,8 @@ void	movement_left(t_mlx *mlx)
 	loc = mlx->player->coords;
 	map = mlx->map;
 	if (mlx->player->coins == mlx->coins
-		&& map->map[loc->y][loc->x + 1] == 'E')
+		&& map->map[loc->y][loc->x - 1] == 'E')
 	{
-		system("clear");
 		ft_printf("Gagnez !!!!\n\n");
 		close_window(mlx);
 	}
@@ -65,14 +59,8 @@ void	movement_left(t_mlx *mlx)
 		&& map->map[loc->y][loc->x - 1] != 'E')
 	{
 		drow_movement(loc->x, loc->y, mlx, "Terrain.xpm");
-		drow_movement(loc->x - 1, loc->y, mlx, "Player.xpm");
-		if (map->map[loc->y][loc->x - 1] == 'C')
-		{
-			map->map[loc->y][loc->x - 1] = '0';
-			mlx->player->coins++;
-		}
-		mlx->player->coords->x -= 1;
-		mlx->move++;
+		check_movement(mlx, loc->x - 1, loc->y);
+		move_tostr(mlx);
 	}
 }
 /// Permet de se deplacer vers le haut en appuyant sur W
@@ -86,9 +74,8 @@ void	movement_up(t_mlx *mlx)
 	loc = mlx->player->coords;
 	map = mlx->map;
 	if (mlx->player->coins == mlx->coins
-		&& map->map[loc->y][loc->x + 1] == 'E')
+		&& map->map[loc->y - 1][loc->x] == 'E')
 	{
-		system("clear");
 		ft_printf("Gagnez !!!!\n\n");
 		close_window(mlx);
 	}
@@ -96,14 +83,8 @@ void	movement_up(t_mlx *mlx)
 		&& map->map[loc->y - 1][loc->x] != 'E')
 	{
 		drow_movement(loc->x, loc->y, mlx, "Terrain.xpm");
-		drow_movement(loc->x, loc->y - 1, mlx, "Player.xpm");
-		if (map->map[loc->y - 1][loc->x] == 'C')
-		{
-			map->map[loc->y - 1][loc->x] = '0';
-			mlx->player->coins++;
-		}
-		mlx->player->coords->y -= 1;
-		mlx->move++;
+		check_movement(mlx, loc->x, loc->y - 1);
+		move_tostr(mlx);
 	}
 }
 /// Permet de se deplacer vers le bas en appuyant sur S
@@ -116,10 +97,11 @@ void	movement_down(t_mlx *mlx)
 
 	loc = mlx->player->coords;
 	map = mlx->map;
-	if (mlx->player->coins == mlx->coins
-		&& map->map[loc->y][loc->x + 1] == 'E')
+	if (map->map[loc->y + 1][loc->x] == 'B')
+		close_window(mlx);
+	else if (mlx->player->coins == mlx->coins
+		&& map->map[loc->y + 1][loc->x] == 'E')
 	{
-		system("clear");
 		ft_printf("Gagnez !!!!\n\n");
 		close_window(mlx);
 	}
@@ -127,35 +109,28 @@ void	movement_down(t_mlx *mlx)
 		&& map->map[loc->y + 1][loc->x] != 'E')
 	{
 		drow_movement(loc->x, loc->y, mlx, "Terrain.xpm");
-		drow_movement(loc->x, loc->y + 1, mlx, "Player.xpm");
-		if (map->map[loc->y + 1][loc->x] == 'C')
-		{
-			map->map[loc->y + 1][loc->x] = '0';
-			mlx->player->coins++;
-		}
-		mlx->player->coords->y += 1;
-		mlx->move++;
+		check_movement(mlx, loc->x, loc->y + 1);
+		move_tostr(mlx);
 	}
 }
 
-/// Permet d'effectuer des actions via les entrees claviers
-/// \param keycode la touche du claviers
-/// \param mlx structure de la window
-/// \return
-int	key_hook(int keycode, t_mlx *mlx)
+void	check_movement(t_mlx *mlx, int x, int y)
 {
-	if (keycode == 53)
-		close_window(mlx);
-	if (keycode == 2)
-		movement_right(mlx);
-	else if (keycode == 0)
-		movement_left(mlx);
-	else if (keycode == 13)
-		movement_up(mlx);
-	else if (keycode == 1)
-		movement_down(mlx);
-	else if (keycode == 7)
-		check_coins(mlx);
-	ft_printf("Moves : [%d]\n", mlx->move);
-	return (0);
+	t_map		*map;
+	t_coords	*loc;
+
+	loc = malloc(sizeof(*loc));
+	loc->x = x;
+	loc->y = y;
+	map = mlx->map;
+	drow_movement(loc->x, loc->y, mlx, "Player.xpm");
+	if (map->map[loc->y][loc->x] == 'C')
+	{
+		map->map[loc->y][loc->x] = '0';
+		mlx->player->coins++;
+	}
+	mlx->player->coords->y = y;
+	mlx->player->coords->x = x;
+	mlx->move++;
+	free(loc);
 }

@@ -58,29 +58,3 @@ t_coords	*find_player(char **map)
 	}
 	return (coords);
 }
-
-///Compte le nb de coins dans la map
-/// \param map tableau en 2d
-/// \return la structure window
-
-int	count_coins(char **map)
-{
-	int	i;
-	int	j;
-	int	coins;
-
-	coins = 0;
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == 'C')
-				coins++;
-			j++;
-		}
-		i++;
-	}
-	return (coins);
-}

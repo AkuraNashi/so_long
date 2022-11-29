@@ -14,6 +14,7 @@
 # define SO_LONG_H
 
 # include "mlx/mlx.h"
+# include "fcntl.h"
 # include "libft/libft.h"
 # include "gnl/get_next_line.h"
 # include "printf/ft_printf.h"
@@ -48,6 +49,8 @@ typedef struct s_mlx
 	void		*img;
 	int			move;
 	int			coins;
+	int 		exit;
+	int 		start;
 	char		*file;
 	t_map		*map;
 	t_entity	*player;
@@ -61,27 +64,39 @@ int			key_hook(int keycode, t_mlx *mlx);
 //Window.c
 t_mlx		*new_mlx(char **av);
 t_coords	*calculate_window_size(char **map);
-void		generate_map(char *map, t_mlx *mlx, int y);
+void		generate_map(t_mlx *mlx, int x, int y);
 int			close_window(t_mlx *mlx);
+void		parse_texture(t_mlx *mlx ,char c, int x, int y);
 //Player.c
 t_entity	*new_player(char **map);
 t_coords	*find_player(char **map);
-int			count_coins(char **map);
 //Map.c
 t_map		*new_map(char	*str);
 char		**fillmap(char	*file);
 size_t		ft_strnllen(const char *str);
-int			count_lines(char *file);
 //Movement.c
 void		movement_right(t_mlx *mlx);
 void		movement_left(t_mlx *mlx);
 void		movement_up(t_mlx *mlx);
 void		movement_down(t_mlx *mlx);
+void		check_movement(t_mlx *mlx, int x, int y);
 //Path_finding.c
 void		check_coins(t_mlx *mlx);
 void		recursive_path(t_mlx *mlx, int x, int y);
 int			check_adjacent(t_mlx *mlx, int x, int y);
-//checking.c
+//Checking.c
+int			check_str(char *str);
+int			check_border(t_mlx *mlx);
 int			check_map(t_mlx *mlx);
 int			check_rectangle(char **map);
+int 		check_elements(t_mlx *mlx);
+//Count.c
+int			count_coins(char **map);
+int 		count_player(char **map);
+int 		count_exit(char **map);
+int			count_lines(char *file);
+//Check_name.c
+int 		check_strname(t_mlx *mlx);
+//Moves_str.c
+void		move_tostr(t_mlx *mlx);
 #endif

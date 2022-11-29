@@ -12,31 +12,6 @@
 
 #include "so_long.h"
 
-///Compte les lignes du fichiers
-/// \param file nom du fichier
-/// \return le nombre de lignes
-
-int	count_lines(char *file)
-{
-	int		fd;
-	char	*line;
-	int		count;
-
-	fd = open(file, O_RDONLY);
-	line = get_next_line(fd);
-	count = 0;
-	while (line != NULL)
-	{
-		if (line[0] != '\n')
-			count++;
-		free(line);
-		line = NULL;
-		line = get_next_line(fd);
-	}
-	close(fd);
-	return (count);
-}
-
 ///Cree une map
 /// \return la structure map
 
@@ -49,6 +24,8 @@ t_map	*new_map(char *str)
 	if (!map || !map->c_max)
 		return (NULL);
 	map->map = fillmap(str);
+	if (map->map == NULL)
+		return (NULL);
 	map->c_max = calculate_window_size(map->map);
 	return (map);
 }
@@ -83,6 +60,8 @@ char	**fillmap(char	*file)
 		return (NULL);
 	temp[i] = NULL;
 	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		return (NULL);
 	line = get_next_line(fd);
 	i = 0;
 	while (line)
@@ -90,6 +69,7 @@ char	**fillmap(char	*file)
 		temp[i] = ft_substr(line, 0, ft_strnllen(line));
 		if (temp[i] == NULL)
 			return (NULL);
+		free(line);
 		line = get_next_line(fd);
 		i++;
 	}

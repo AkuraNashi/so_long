@@ -59,18 +59,13 @@ int	check_border(t_mlx *mlx)
 //Ajouter ennemie
 //Ajouter animation
 //Ajouter moves dans la fenetre
+
 /// Va checker les differents cas d'erreur possibles avec la map
 /// \param mlx structure de la windows
 /// \return 1 si la map passe sinon 0
 int	check_map(t_mlx *mlx)
 {
-	int	i;
-
-	i = ft_strnllen(mlx->file);
-	if (!(mlx->file[i - 1] == 'r'
-			&& mlx->file[i - 2] == 'e'
-			&& mlx->file[i - 3] == 'b'
-			&& mlx->file[i - 4] == '.'))
+	if (!(check_strname(mlx)))
 	{
 		ft_printf("Error\nMauvaise extension de fichier\nClosing...\n");
 		return (0);
@@ -83,6 +78,12 @@ int	check_map(t_mlx *mlx)
 	if (!check_rectangle(mlx->map->map))
 	{
 		ft_printf("Error\nLa map n'est pas un rectangle\nClosing...\n");
+		return (0);
+	}
+	if (!check_elements(mlx))
+	{
+		ft_printf("Error\nLa map ne contient pas un de ces elements :"
+			"\n 1 Sortie\n 1 item\n 1 position de depart\nClosing...\n");
 		return (0);
 	}
 	return (1);
@@ -110,4 +111,12 @@ int	check_rectangle(char **map)
 	if (j > i || i > j)
 		return (1);
 	return (0);
+}
+
+int	check_elements(t_mlx *mlx)
+{
+	if (mlx->coins >= 1 && mlx->start == 1 && mlx->exit == 1)
+		return (1);
+	else
+		return (0);
 }
