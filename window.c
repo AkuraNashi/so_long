@@ -133,7 +133,7 @@ int	close_window(t_mlx *mlx)
 	free(mlx->cp);
 	free(mlx->player);
 	free(mlx->player->coords);
-	free_tab((void *)mlx->player->img);
+//	free_tab((void *)mlx->player->img);
 	free_tab((void *)mlx->map->map);
 	free(mlx);
 	exit(0);
