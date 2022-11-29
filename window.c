@@ -131,9 +131,9 @@ int	close_window(t_mlx *mlx)
 {
 	mlx_destroy_window(mlx->mlx, mlx->mlx_win);
 	free(mlx->cp);
+	free_tab((void *)mlx->player->img);
 	free(mlx->player);
 	free(mlx->player->coords);
-//	free_tab((void *)mlx->player->img);
 	free_tab((void *)mlx->map->map);
 	free(mlx);
 	exit(0);

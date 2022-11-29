@@ -67,6 +67,7 @@ t_coords	*calculate_window_size(char **map);
 void		generate_map(t_mlx *mlx, int x, int y);
 int			close_window(t_mlx *mlx);
 void		parse_texture(t_mlx *mlx ,char c, int x, int y);
+void		free_tab(void **tab);
 //Player.c
 t_entity	*new_player(char **map);
 t_coords	*find_player(char **map);
