@@ -78,7 +78,7 @@ int	main(int ac, char **av)
 	}
 	if (!check_map(mlx))
 		close_window(mlx);
-//	check_coins(mlx); //A des leaks de tableau
+	check_coins(mlx); //A des leaks de tableau
 	generate_map(mlx, 0, 0);
 	img = mlx_xpm_file_to_image(mlx->mlx, "terrain.xpm", &mlx->w, &mlx->h);
 	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, 0, mlx->map->c_max->y - 128);

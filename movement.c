@@ -49,6 +49,8 @@ void	movement_left(t_mlx *mlx)
 
 	loc = mlx->player->coords;
 	map = mlx->map;
+	if (map->map[loc->y][loc->x - 1] == 'B')
+		close_window(mlx);
 	if (mlx->player->coins == mlx->coins
 		&& map->map[loc->y][loc->x - 1] == 'E')
 	{
@@ -73,6 +75,8 @@ void	movement_up(t_mlx *mlx)
 
 	loc = mlx->player->coords;
 	map = mlx->map;
+	if (map->map[loc->y - 1][loc->x] == 'B')
+		close_window(mlx);
 	if (mlx->player->coins == mlx->coins
 		&& map->map[loc->y - 1][loc->x] == 'E')
 	{
