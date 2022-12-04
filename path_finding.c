@@ -27,9 +27,7 @@ int	check_adjacent(t_mlx *mlx, int x, int y)
 	c->x = x;
 	c->y = y;
 	if (map[c->y][c->x] != '1')
-	{
 		map[c->y][c->x] = 'B';
-	}
 	free(c);
 	return (0);
 }
@@ -41,41 +39,15 @@ int	check_adjacent(t_mlx *mlx, int x, int y)
 void	recursive_path(t_mlx *mlx, int x, int y)
 {
 	char	**map;
-//	int		**find = NULL;
-//	int		count;
-//
-//	count = 0;
+
 	map = mlx->map->map;
 	if (map[y][x] == '1' || map[y][x] == 'B')
 		return ;
 	check_adjacent(mlx, x, y);
 	recursive_path(mlx, x, y - 1);
-//	find[x][y] = count;
-//	count++;
 	recursive_path(mlx, x + 1, y);
-//	find[x][y] = count;
-//	count++;
 	recursive_path(mlx, x, y + 1);
-//	find[x][y] = count;
-//	count++;
 	recursive_path(mlx, x - 1, y);
-//	find[x][y] = count;
-//	count++;
-//
-//	int t;
-//	int z;
-//
-//	t = 0;
-//	z = 0;
-//	while(find[t])
-//	{
-//		while(find[t][z])
-//		{
-//			printf("[%d]", find[t][z]);
-//		}
-//		printf("\n");
-//		t++;
-//	}
 }
 /// Check le nb de coins dans la matrice
 /// \param mlx structure de la window
@@ -103,5 +75,8 @@ void	check_coins(t_mlx *mlx)
 		}
 		i++;
 	}
+	printf("map : [%p]\n", mlx->map->map);
+	free_tab((void *)mlx->map->map);
+	free(mlx->map->map);
 	mlx->map->map = fillmap(mlx->file);
 }
