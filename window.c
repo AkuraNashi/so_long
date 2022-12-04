@@ -37,6 +37,8 @@ t_mlx	*new_mlx(char **av)
 	w->start = count_player(w->map->map);
 	w->exit = count_exit(w->map->map);
 	w->file = av[1];
+	printf("new mlx window : [%p]\n", w);
+	printf("new mlx temp : [%p]\n", temp);
 	return (w);
 }
 
@@ -50,6 +52,7 @@ t_coords	*calculate_window_size(char **map)
 	int			j;
 
 	coords = malloc(sizeof(*coords));
+	printf("calculate window size coords : [%p]\n", coords);
 	i = 0;
 	coords->x = 0;
 	coords->y = 0;
@@ -62,6 +65,7 @@ t_coords	*calculate_window_size(char **map)
 	}
 	coords->y = (128 * i) + 128;
 	coords->x = (128 * j);
+	printf("calculate window size coords : [%p]\n", coords);
 	return (coords);
 }
 
@@ -139,5 +143,4 @@ int	close_window(t_mlx *mlx)
 	free(mlx);
 	exit(0);
 }
-
 

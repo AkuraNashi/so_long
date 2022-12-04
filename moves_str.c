@@ -24,6 +24,9 @@ void	move_tostr(t_mlx *mlx)
 	str = ft_strjoin("Moves : ", temp);
 	mlx_string_put(mlx->mlx, mlx->mlx_win, 20,
 				   mlx->map->c_max->y - 50, 0xFFFFFF, str);
+	printf("move to str str : [%p]\n", str);
+	printf("move to str temp : [%p]\n", temp);
+	printf("move to str img : [%p]\n", img);
 	free(str);
 	free(temp);
 }

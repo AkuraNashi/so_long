@@ -44,6 +44,8 @@ void	drow_movement(int x, int y, t_mlx *mlx, char *nameimage)
 
 	img = mlx_xpm_file_to_image(mlx->mlx, nameimage, &mlx->w, &mlx->h);
 	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, x * 128, y * 128);
+	printf("drow movement img : [%p]\n", img);
+
 }
 
 /// Permet de generer une image dans la window
@@ -57,6 +59,7 @@ void	drow_one_texture(int x, int y, t_mlx *mlx, char *nameimage)
 
 	img = mlx_xpm_file_to_image(mlx->mlx, nameimage, &mlx->w, &mlx->h);
 	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img, x, y);
+	printf("drow one texture img : [%p]\n", img);
 }
 
 /// Hook sur les touches afin de se deplacer, fermer la fenetre etc

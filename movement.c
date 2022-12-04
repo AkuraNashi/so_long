@@ -38,6 +38,8 @@ void	movement_right(t_mlx *mlx)
 		check_movement(mlx, loc->x + 1, loc->y);
 		move_tostr(mlx);
 	}
+	printf("movement right loc : [%p]\n", loc);
+	printf("movement right map : [%p]\n", map);
 }
 /// Permet de se deplacer sur la gauche en appuyant sur a
 /// \param mlx structure de la window
@@ -64,6 +66,8 @@ void	movement_left(t_mlx *mlx)
 		check_movement(mlx, loc->x - 1, loc->y);
 		move_tostr(mlx);
 	}
+	printf("movement left loc : [%p]\n", loc);
+	printf("movement left map : [%p]\n", map);
 }
 /// Permet de se deplacer vers le haut en appuyant sur W
 /// \param mlx structure de la window
@@ -90,6 +94,8 @@ void	movement_up(t_mlx *mlx)
 		check_movement(mlx, loc->x, loc->y - 1);
 		move_tostr(mlx);
 	}
+	printf("movement up loc : [%p]\n", loc);
+	printf("movement up map : [%p]\n", map);
 }
 /// Permet de se deplacer vers le bas en appuyant sur S
 /// \param mlx structure de la window
@@ -116,6 +122,8 @@ void	movement_down(t_mlx *mlx)
 		check_movement(mlx, loc->x, loc->y + 1);
 		move_tostr(mlx);
 	}
+	printf("movement down loc : [%p]\n", loc);
+	printf("movement down map : [%p]\n", map);
 }
 
 void	check_movement(t_mlx *mlx, int x, int y)
@@ -136,5 +144,7 @@ void	check_movement(t_mlx *mlx, int x, int y)
 	mlx->player->coords->y = y;
 	mlx->player->coords->x = x;
 	mlx->move++;
+	printf("check movement loc : [%p]\n", loc);
+	printf("check movement map : [%p]\n", map);
 	free(loc);
 }

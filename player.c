@@ -23,6 +23,8 @@ t_entity	*new_player(char **map)
 	player = malloc(sizeof(*player));
 	player->coords = find_player(map);
 	player->coins = 0;
+	printf("new player player : [%p]\n", player);
+	printf("new player player coords: [%p]\n", player->coords);
 	return (player);
 }
 
@@ -37,6 +39,7 @@ t_coords	*find_player(char **map)
 	int			j;
 
 	coords = malloc(sizeof(*coords));
+	printf("find player coords : [%p]\n", coords);
 	if (!coords)
 		return (NULL);
 	i = 0;
@@ -56,5 +59,6 @@ t_coords	*find_player(char **map)
 		}
 		i++;
 	}
+	printf("find player coords : [%p]\n", coords);
 	return (coords);
 }

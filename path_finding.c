@@ -23,6 +23,7 @@ int	check_adjacent(t_mlx *mlx, int x, int y)
 	char		**map;
 
 	map = mlx->map->map;
+	printf("check adjacent map : [%p]\n", map);
 	c = malloc(sizeof(*c));
 	c->x = x;
 	c->y = y;
@@ -41,6 +42,7 @@ void	recursive_path(t_mlx *mlx, int x, int y)
 	char	**map;
 
 	map = mlx->map->map;
+	printf("recursive path map : [%p]\n", map);
 	if (map[y][x] == '1' || map[y][x] == 'B')
 		return ;
 	check_adjacent(mlx, x, y);
@@ -59,6 +61,7 @@ void	check_coins(t_mlx *mlx)
 	int		j;
 
 	map = mlx->map->map;
+	printf("check coin map : [%p]\n", map);
 	i = 0;
 	while (map[i])
 	{
@@ -75,7 +78,6 @@ void	check_coins(t_mlx *mlx)
 		}
 		i++;
 	}
-	printf("map : [%p]\n", mlx->map->map);
 	free_tab((void *)mlx->map->map);
 	free(mlx->map->map);
 	mlx->map->map = fillmap(mlx->file);
