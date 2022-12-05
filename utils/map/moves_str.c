@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../../so_long.h"
 
 /// Affiche le nombre de move realisé en bas
 /// \param mlx structure de la window

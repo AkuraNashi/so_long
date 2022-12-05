@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../../so_long.h"
 
 ///Permet  de calculer la taille de la fenetre en fonction de la map
 /// \return la structure mlx

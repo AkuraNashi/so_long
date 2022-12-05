@@ -18,18 +18,22 @@ CFLAGS 		= -Wall -Wextra -Werror -Imlx -I.
 CC			= cc
 SRC_PATH	= ./
 OPTIONS		= -Ilibft -Lmlx -g3
+
+SRC_MAP		=	utils/map/count.c			\
+				utils/map/window.c			\
+				utils/map/path_finding.c	\
+				utils/map/moves_str.c		\
+				utils/map/map.c
+
 SRC 		= 	main.c						\
-				count.c						\
 				check_name.c				\
+				checking.c					\
 				player.c					\
 				movement.c					\
-				moves_str.c					\
-				window.c					\
-				path_finding.c				\
-				map.c						\
-				checking.c					\
 				gnl/get_next_line.c			\
-				gnl/get_next_line_utils.c
+				gnl/get_next_line_utils.c	\
+				$(SRC_MAP)
+
 SRCS = $(addprefix $(SRC_PATH),$(SRC))
 OBJS		= ${SRCS:.c=.o}
 

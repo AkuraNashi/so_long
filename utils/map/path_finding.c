@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../../so_long.h"
 ///Check la coords XY dans le tableau afin de savoir si c'est un mur ou non
 /// \param mlx la structure window
 /// \param x la parcelle X
