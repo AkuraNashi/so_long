@@ -51,6 +51,7 @@ typedef struct s_mlx
 	int			coins;
 	int 		exit;
 	int 		start;
+	int 		count;
 	char		*file;
 	t_map		*map;
 	t_entity	*player;
@@ -86,6 +87,7 @@ void		check_movement(t_mlx *mlx, int x, int y);
 void		check_coins(t_mlx *mlx);
 void		recursive_path(t_mlx *mlx, int x, int y);
 int			check_adjacent(t_mlx *mlx, int x, int y);
+void		check_amount(t_mlx *mlx, int i, int j);
 //Checking.c
 int			check_str(char *str);
 int			check_border(t_mlx *mlx);

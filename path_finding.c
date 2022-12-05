@@ -26,6 +26,9 @@ int	check_adjacent(t_mlx *mlx, int x, int y)
 	c = malloc(sizeof(*c));
 	c->x = x;
 	c->y = y;
+	if (map[c->y][c->x] == 'P' || map[c->y][c->x] == 'E'
+	|| map[c->y][c->x] == 'C')
+		mlx->count++;
 	if (map[c->y][c->x] != '1')
 		map[c->y][c->x] = 'B';
 	free(c);
@@ -65,16 +68,28 @@ void	check_coins(t_mlx *mlx)
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] == 'C')
-			{
-				mlx->cp->x = j;
-				mlx->cp->y = i;
-				recursive_path(mlx, j, i);
-			}
+			if (map[i][j] == 'C' || map[i][j] == 'E')
+				check_amount(mlx, i, j);
 			j++;
 		}
 		i++;
 	}
+	if (mlx->count != mlx->coins + 2)
+	{
+		ft_printf("La map n'est pas faisable...\nClosing...");
+		close_window(mlx);
+	}
 	free_tab((void *)mlx->map->map);
 	mlx->map->map = fillmap(mlx->file);
+}
+
+void	check_amount(t_mlx *mlx, int i, int j)
+{
+	mlx->cp->x = j;
+	mlx->cp->y = i;
+	if (mlx->count != mlx->coins + 2)
+	{
+		mlx->count = 0;
+		recursive_path(mlx, j, i);
+	}
 }

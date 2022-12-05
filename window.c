@@ -36,6 +36,7 @@ t_mlx	*new_mlx(char **av)
 	w->start = count_player(w->map->map);
 	w->exit = count_exit(w->map->map);
 	w->file = av[1];
+	w->count = 0;
 	return (w);
 }
 
