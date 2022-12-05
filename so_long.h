@@ -60,8 +60,8 @@ typedef struct s_mlx
 //Main.c
 void		drow_one_texture(int x, int y, t_mlx *mlx, char *nameimage);
 void		drow_movement(int x, int y, t_mlx *mlx, char *nameimage);
-int			key_hook(int keycode, t_mlx *mlx);
 void		free_tab(void **tab);
+int			initialisation(int ac, char **av);
 //Window.c
 t_mlx		*new_mlx(char **av);
 t_coords	*calculate_window_size(char **map);
@@ -75,6 +75,7 @@ t_coords	*find_player(char **map);
 t_map		*new_map(char	*str);
 char		**fillmap(char	*file);
 size_t		ft_strnllen(const char *str);
+int			key_hook(int keycode, t_mlx *mlx);
 //Movement.c
 void		movement_right(t_mlx *mlx);
 void		movement_left(t_mlx *mlx);
