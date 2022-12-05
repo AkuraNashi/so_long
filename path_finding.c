@@ -83,6 +83,11 @@ void	check_coins(t_mlx *mlx)
 	mlx->map->map = fillmap(mlx->file);
 }
 
+/// Check le nombre de composant accessible
+/// si cela n'est pas le bon alors la map est infaisable
+/// \param mlx LA structure de la window
+/// \param i coordoonees x du composant
+/// \param j coordoonees y du composant
 void	check_amount(t_mlx *mlx, int i, int j)
 {
 	mlx->cp->x = j;

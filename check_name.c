@@ -12,6 +12,9 @@
 
 #include "so_long.h"
 
+/// Check l'extension du fichier
+/// \param av nom du fichier
+/// \return 0 si ce n'est pas bon
 int	check_strname(char *av)
 {
 	int	i;

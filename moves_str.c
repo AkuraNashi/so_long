@@ -12,6 +12,8 @@
 
 #include "so_long.h"
 
+/// Affiche le nombre de move realisé en bas
+/// \param mlx structure de la window
 void	move_tostr(t_mlx *mlx)
 {
 	char	*str;
@@ -19,7 +21,7 @@ void	move_tostr(t_mlx *mlx)
 	void	*img;
 
 	temp = ft_itoa(mlx->move);
-	img = mlx_xpm_file_to_image(mlx->mlx, "terrain.xpm", &mlx->w, &mlx->h);
+	img = mlx_xpm_file_to_image(mlx->mlx, "assets/terrain.xpm", &mlx->w, &mlx->h);
 	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img,
 		0, mlx->map->c_max->y - 128);
 	str = ft_strjoin("Moves : ", temp);

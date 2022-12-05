@@ -55,11 +55,6 @@ int	check_border(t_mlx *mlx)
 	return (1);
 }
 
-//Check pathfinding
-//Ajouter ennemie
-//Ajouter animation
-//Ajouter moves dans la fenetre
-
 /// Va checker les differents cas d'erreur possibles avec la map
 /// \param mlx structure de la windows
 /// \return 1 si la map passe sinon 0
@@ -108,6 +103,9 @@ int	check_rectangle(char **map)
 	return (0);
 }
 
+/// Check le bon nombre d'element
+/// \param mlx structure de la window
+/// \return 0 si ce n'est pas bon
 int	check_elements(t_mlx *mlx)
 {
 	if (mlx->coins >= 1 && mlx->start == 1 && mlx->exit == 1)

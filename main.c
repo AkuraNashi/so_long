@@ -12,6 +12,8 @@
 
 #include "so_long.h"
 
+/// Free le tableau envoyer
+/// \param tab le tableau a free
 void	free_tab(void **tab)
 {
 	int	i;
@@ -87,7 +89,7 @@ int	main(int ac, char **av)
 		close_window(mlx);
 	check_coins(mlx);
 	generate_map(mlx, 0, 0);
-	img = mlx_xpm_file_to_image(mlx->mlx, "terrain.xpm", &mlx->w, &mlx->h);
+	img = mlx_xpm_file_to_image(mlx->mlx, "assets/terrain.xpm", &mlx->w, &mlx->h);
 	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img,
 		0, mlx->map->c_max->y - 128);
 	mlx_hook(mlx->mlx_win, 2, 1L << 0, key_hook, mlx);

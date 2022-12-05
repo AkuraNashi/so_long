@@ -34,7 +34,7 @@ void	movement_right(t_mlx *mlx)
 	else if (map->map[loc->y][loc->x + 1] != '1' &&
 	map->map[loc->y][loc->x + 1] != 'E')
 	{
-		drow_movement(loc->x, loc->y, mlx, "Terrain.xpm");
+		drow_movement(loc->x, loc->y, mlx, "assets/Terrain.xpm");
 		check_movement(mlx, loc->x + 1, loc->y);
 		move_tostr(mlx);
 	}
@@ -60,7 +60,7 @@ void	movement_left(t_mlx *mlx)
 	else if (map->map[loc->y][loc->x - 1] != '1'
 		&& map->map[loc->y][loc->x - 1] != 'E')
 	{
-		drow_movement(loc->x, loc->y, mlx, "Terrain.xpm");
+		drow_movement(loc->x, loc->y, mlx, "assets/Terrain.xpm");
 		check_movement(mlx, loc->x - 1, loc->y);
 		move_tostr(mlx);
 	}
@@ -86,7 +86,7 @@ void	movement_up(t_mlx *mlx)
 	else if (map->map[loc->y - 1][loc->x] != '1'
 		&& map->map[loc->y - 1][loc->x] != 'E')
 	{
-		drow_movement(loc->x, loc->y, mlx, "Terrain.xpm");
+		drow_movement(loc->x, loc->y, mlx, "assets/Terrain.xpm");
 		check_movement(mlx, loc->x, loc->y - 1);
 		move_tostr(mlx);
 	}
@@ -112,12 +112,16 @@ void	movement_down(t_mlx *mlx)
 	else if (map->map[loc->y + 1][loc->x] != '1'
 		&& map->map[loc->y + 1][loc->x] != 'E')
 	{
-		drow_movement(loc->x, loc->y, mlx, "Terrain.xpm");
+		drow_movement(loc->x, loc->y, mlx, "assets/Terrain.xpm");
 		check_movement(mlx, loc->x, loc->y + 1);
 		move_tostr(mlx);
 	}
 }
 
+/// Check si le mouvement est possible
+/// \param mlx structure de la window
+/// \param x coordoonnees x du joueur
+/// \param y coordoonees y du joueur
 void	check_movement(t_mlx *mlx, int x, int y)
 {
 	t_map		*map;
@@ -127,7 +131,7 @@ void	check_movement(t_mlx *mlx, int x, int y)
 	loc->x = x;
 	loc->y = y;
 	map = mlx->map;
-	drow_movement(loc->x, loc->y, mlx, "Player.xpm");
+	drow_movement(loc->x, loc->y, mlx, "assets/Player.xpm");
 	if (map->map[loc->y][loc->x] == 'C')
 	{
 		map->map[loc->y][loc->x] = '0';

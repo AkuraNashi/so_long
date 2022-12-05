@@ -98,17 +98,17 @@ void	generate_map(t_mlx *mlx, int x, int y)
 void	parse_texture(t_mlx *mlx, char c, int x, int y)
 {
 	if (c == '1')
-		drow_one_texture(x, y, mlx, "Block.xpm");
+		drow_one_texture(x, y, mlx, "assets/Block.xpm");
 	else if (c == 'C')
-		drow_one_texture(x, y, mlx, "Coin.xpm");
+		drow_one_texture(x, y, mlx, "assets/Coin.xpm");
 	else if (c == 'E')
-		drow_one_texture(x, y, mlx, "Exit.xpm");
+		drow_one_texture(x, y, mlx, "assets/Exit.xpm");
 	else if (c == 'P')
-		drow_one_texture(x, y, mlx, "Player.xpm");
+		drow_one_texture(x, y, mlx, "assets/Player.xpm");
 	else if (c == 'B')
-		drow_one_texture(x, y, mlx, "Blue.xpm");
+		drow_one_texture(x, y, mlx, "assets/Blue.xpm");
 	else
-		drow_one_texture(x, y, mlx, "Terrain.xpm");
+		drow_one_texture(x, y, mlx, "assets/Terrain.xpm");
 }
 
 ///Ferme la fenetre envoyer en parametres
