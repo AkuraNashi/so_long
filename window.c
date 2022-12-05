@@ -22,16 +22,19 @@ t_mlx	*new_mlx(char **av)
 	temp = ft_calloc(1, sizeof(*temp));
 	w = malloc(sizeof(*w));
 	w->mlx = mlx_init();
+	printf("w mlx : [%p]\n", w->mlx);
 	w->map = new_map(av[1]);
-	if (w->map == NULL) {
+	printf("w map : [%p]\n", w->map);
+	if (w->map == NULL)
 		return (NULL);
-	}
 	w->mlx_win = mlx_new_window(w->mlx, w->map->c_max->x,
 			w->map->c_max->y, "SO_SSBU");
+	printf("w mlx win : [%p]\n", w->mlx_win);
 	w->h = 0;
 	w->w = 0;
 	w->cp = temp;
 	w->player = new_player(w->map->map);
+	printf("w player : [%p]\n", w->player);
 	w->move = 0;
 	w->coins = count_coins(w->map->map);
 	w->start = count_player(w->map->map);

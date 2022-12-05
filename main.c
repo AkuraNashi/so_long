@@ -62,6 +62,18 @@ void	drow_one_texture(int x, int y, t_mlx *mlx, char *nameimage)
 	printf("drow one texture img : [%p]\n", img);
 }
 
+int Initialisation(int ac, char **av)
+{
+	if (ac < 2)
+		return (0);
+	if (!check_strname(av[1]))
+	{
+		ft_printf("Error\nMauvaise extension de fichier\nClosing...\n");
+		return(0);
+	}
+	return (1);
+}
+
 /// Hook sur les touches afin de se deplacer, fermer la fenetre etc
 /// \param keycode la touche envoyer
 /// \param mlx structure de la window
@@ -71,7 +83,7 @@ int	main(int ac, char **av)
 	t_mlx		*mlx;
 	void		*img;
 
-	if (ac < 2)
+	if(!Initialisation(ac, av))
 		return (0);
 	mlx = new_mlx(av);
 	if (mlx == NULL)

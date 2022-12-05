@@ -97,7 +97,7 @@ int 		count_player(char **map);
 int 		count_exit(char **map);
 int			count_lines(char *file);
 //Check_name.c
-int 		check_strname(t_mlx *mlx);
+int 		check_strname(char	*str);
 //Moves_str.c
 void		move_tostr(t_mlx *mlx);
 #endif

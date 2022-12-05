@@ -12,15 +12,15 @@
 
 #include "so_long.h"
 
-int	check_strname(t_mlx *mlx)
+int	check_strname(char *av)
 {
 	int	i;
 
-	i = count_lines(mlx->file);
-	if (!(mlx->file[i - 1] == 'r'
-			&& mlx->file[i - 2] == 'e'
-			&& mlx->file[i - 3] == 'b'
-			&& mlx->file[i - 4] == '.'))
+	i = ft_strlen(av);
+	if (!(av[i - 1] == 'r'
+			&& av[i - 2] == 'e'
+			&& av[i - 3] == 'b'
+			&& av[i - 4] == '.'))
 		return (0);
 	return (1);
 }

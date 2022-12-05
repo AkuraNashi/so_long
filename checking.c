@@ -67,11 +67,6 @@ int	check_border(t_mlx *mlx)
 /// \return 1 si la map passe sinon 0
 int	check_map(t_mlx *mlx)
 {
-	if (!(check_strname(mlx)))
-	{
-		ft_printf("Error\nMauvaise extension de fichier\nClosing...\n");
-		return (0);
-	}
 	if (!check_border(mlx))
 	{
 		ft_printf("Error\nLa map n'est pas entouré de mur\nClosing...\n");
