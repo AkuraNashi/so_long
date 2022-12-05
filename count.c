@@ -33,9 +33,6 @@ int	count_lines(char *file)
 		line = NULL;
 		line = get_next_line(fd);
 	}
-	printf("count line fd : [%p]\n", &fd);
-	printf("count line line : [%p]\n", line);
-	printf("count line count : [%p]\n", &count);
 	free(line);
 	close(fd);
 	return (count);

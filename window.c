@@ -22,26 +22,20 @@ t_mlx	*new_mlx(char **av)
 	temp = ft_calloc(1, sizeof(*temp));
 	w = malloc(sizeof(*w));
 	w->mlx = mlx_init();
-	printf("w mlx : [%p]\n", w->mlx);
 	w->map = new_map(av[1]);
-	printf("w map : [%p]\n", w->map);
 	if (w->map == NULL)
 		return (NULL);
 	w->mlx_win = mlx_new_window(w->mlx, w->map->c_max->x,
 			w->map->c_max->y, "SO_SSBU");
-	printf("w mlx win : [%p]\n", w->mlx_win);
 	w->h = 0;
 	w->w = 0;
 	w->cp = temp;
 	w->player = new_player(w->map->map);
-	printf("w player : [%p]\n", w->player);
 	w->move = 0;
 	w->coins = count_coins(w->map->map);
 	w->start = count_player(w->map->map);
 	w->exit = count_exit(w->map->map);
 	w->file = av[1];
-	printf("new mlx window : [%p]\n", w);
-	printf("new mlx temp : [%p]\n", temp);
 	return (w);
 }
 
@@ -55,7 +49,6 @@ t_coords	*calculate_window_size(char **map)
 	int			j;
 
 	coords = malloc(sizeof(*coords));
-	printf("calculate window size coords : [%p]\n", coords);
 	i = 0;
 	coords->x = 0;
 	coords->y = 0;
@@ -68,7 +61,6 @@ t_coords	*calculate_window_size(char **map)
 	}
 	coords->y = (128 * i) + 128;
 	coords->x = (128 * j);
-	printf("calculate window size coords : [%p]\n", coords);
 	return (coords);
 }
 
@@ -118,21 +110,6 @@ void	parse_texture(t_mlx *mlx, char c, int x, int y)
 		drow_one_texture(x, y, mlx, "Terrain.xpm");
 }
 
-void	free_tab(void **tab)
-{
-	int	i;
-
-	i = 0;
-	while(tab[i])
-	{
-		free(tab[i]);
-		tab[i] = NULL;
-		i++;
-	}
-	free(tab);
-	tab = NULL;
-}
-
 ///Ferme la fenetre envoyer en parametres
 /// \param mlx la structure window
 
@@ -148,4 +125,3 @@ int	close_window(t_mlx *mlx)
 	free(mlx);
 	exit(0);
 }
-

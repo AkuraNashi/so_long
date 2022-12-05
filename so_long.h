@@ -61,13 +61,13 @@ typedef struct s_mlx
 void		drow_one_texture(int x, int y, t_mlx *mlx, char *nameimage);
 void		drow_movement(int x, int y, t_mlx *mlx, char *nameimage);
 int			key_hook(int keycode, t_mlx *mlx);
+void		free_tab(void **tab);
 //Window.c
 t_mlx		*new_mlx(char **av);
 t_coords	*calculate_window_size(char **map);
 void		generate_map(t_mlx *mlx, int x, int y);
 int			close_window(t_mlx *mlx);
 void		parse_texture(t_mlx *mlx ,char c, int x, int y);
-void		free_tab(void **tab);
 //Player.c
 t_entity	*new_player(char **map);
 t_coords	*find_player(char **map);

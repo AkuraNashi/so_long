@@ -39,10 +39,8 @@ int	check_border(t_mlx *mlx)
 	int		length;
 
 	map = mlx->map->map;
-	printf("check border map : [%p]\n", map);
 	i = 0;
 	length = ft_strlen(map[i]) - 1;
-	printf("check border length : [%p]\n", &length);
 	while (map[i])
 	{
 		if (i == 0 || i == count_lines(mlx->file))

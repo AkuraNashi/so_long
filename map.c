@@ -57,7 +57,6 @@ char	**fillmap(char	*file)
 	temp = malloc((i + 1) * sizeof(char *));
 	if (!temp)
 		return (NULL);
-	temp[i] = NULL;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
@@ -66,11 +65,10 @@ char	**fillmap(char	*file)
 	while (line)
 	{
 		temp[i] = ft_substr(line, 0, ft_strnllen(line));
-		if (temp[i] == NULL)
+		if (temp[i++] == NULL)
 			return (NULL);
 		free(line);
 		line = get_next_line(fd);
-		i++;
 	}
 	temp[i] = NULL;
 	close(fd);
