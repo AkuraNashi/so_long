@@ -20,16 +20,12 @@ t_map	*new_map(char *str)
 	t_map	*map;
 
 	map = malloc(sizeof(*map));
-	map->c_max = malloc(sizeof(*(map->c_max)));
 	if (!map || !map->c_max)
 		return (NULL);
 	map->map = fillmap(str);
 	if (map->map == NULL)
 		return (NULL);
 	map->c_max = calculate_window_size(map->map);
-	printf("new map map : [%p]\n", map);
-	printf("new map map map : [%p]\n", map->map);
-	printf("new map cmax : [%p]\n", map->c_max);
 	return (map);
 }
 /// Permet de savoir la longueur de la chaine de characteres sans \n
@@ -59,7 +55,6 @@ char	**fillmap(char	*file)
 
 	i = count_lines(file);
 	temp = malloc((i + 1) * sizeof(char *));
-	printf("fillmap temp : [%p]\n");
 	if (!temp)
 		return (NULL);
 	temp[i] = NULL;

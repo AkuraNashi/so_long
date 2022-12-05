@@ -79,6 +79,5 @@ void	check_coins(t_mlx *mlx)
 		i++;
 	}
 	free_tab((void *)mlx->map->map);
-	free(mlx->map->map);
 	mlx->map->map = fillmap(mlx->file);
 }

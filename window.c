@@ -126,6 +126,8 @@ void	free_tab(void **tab)
 		tab[i] = NULL;
 		i++;
 	}
+	free(tab);
+	tab = NULL;
 }
 
 ///Ferme la fenetre envoyer en parametres
