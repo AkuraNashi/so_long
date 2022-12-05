@@ -25,14 +25,16 @@ SRC_MAP		=	utils/map/count.c			\
 				utils/map/moves_str.c		\
 				utils/map/map.c
 
+SRC_PLAYER	=	utils/player/player.c		\
+				utils/player/movement.c
+
 SRC 		= 	main.c						\
 				check_name.c				\
 				checking.c					\
-				player.c					\
-				movement.c					\
 				gnl/get_next_line.c			\
 				gnl/get_next_line_utils.c	\
-				$(SRC_MAP)
+				$(SRC_MAP)					\
+				$(SRC_PLAYER)
 
 SRCS = $(addprefix $(SRC_PATH),$(SRC))
 OBJS		= ${SRCS:.c=.o}

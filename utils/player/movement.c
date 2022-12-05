@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../../so_long.h"
 #include <stdlib.h>
 
 /// Permet de se deplacer vers la droite en appuyant sur D
